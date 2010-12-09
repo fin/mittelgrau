@@ -298,7 +298,7 @@
 					"-all_load",
 				);
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SPARROW_SRC}/**";
 			};
@@ -319,7 +319,7 @@
 					"-all_load",
 				);
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "${SPARROW_SRC}/**";
 			};
 			name = Release;
