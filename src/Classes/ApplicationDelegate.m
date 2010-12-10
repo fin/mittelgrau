@@ -19,6 +19,9 @@
         mSparrowView = [[SPView alloc] initWithFrame:mWindow.bounds]; 
         [mWindow addSubview:mSparrowView];
     }
+    
+    [mSparrowView setMultipleTouchEnabled:TRUE];
+    
     return self;
 }
 

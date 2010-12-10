@@ -28,6 +28,8 @@
     }
 	[self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
 	
+    [self setDeltaX:10];
+    
     return self;
 }
 
@@ -40,9 +42,8 @@
 
 - (void)onEnterFrame:(SPEnterFrameEvent *)event
 {
-    NSLog(@"Time passed since last frame: %f", event.passedTime);
-	[self setX: self.x + event.passedTime * 10];
-	[self setY: self.y + event.passedTime * 10];
+	[self setX: self.x + event.passedTime * deltaX];
+	[self setY: self.y + event.passedTime * deltaY];
 }
 
 - (Player *)initWithBW:(int)isBlack {
@@ -54,6 +55,8 @@
 
 @synthesize img;
 @synthesize orientation;
+@synthesize deltaX;
+@synthesize deltaY;
 
 
 @end
