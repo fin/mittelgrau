@@ -7,11 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "Sparrow.h" 
 
 @interface Level : SPSprite {
 	SPImage *backgroundImage;
+	
+@private
+	BOOL *blackCollisionMap[768][1024];
+	BOOL *whiteCollisionMap[768][1024];
 }
 - (Level*)initWithBackground: (NSString*)backgroundPath;
+- (void)getCollisionMapsFromImage: (UIImage*)image;
 
 @end
