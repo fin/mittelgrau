@@ -41,7 +41,8 @@
 - (void)onEnterFrame:(SPEnterFrameEvent *)event
 {
     NSLog(@"Time passed since last frame: %f", event.passedTime);
-//    [enemy moveBy:event.passedTime * enemy.velocity];
+	[self setX: self.x + event.passedTime * 10];
+	[self setY: self.y + event.passedTime * 10];
 }
 
 - (Player *)initWithBW:(int)isBlack {
