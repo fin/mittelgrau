@@ -39,7 +39,7 @@
 - (void)onEnterFrame:(SPEnterFrameEvent *)event
 {
     NSLog(@"Time passed since last frame: %f", event.passedTime);
-    [enemy moveBy:event.passedTime * enemy.velocity];
+//    [enemy moveBy:event.passedTime * enemy.velocity];
 }
 
 @end

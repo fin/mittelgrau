@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <Sparrow.h>
+
 @interface player : SPSprite {
 	
 }
