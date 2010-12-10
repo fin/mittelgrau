@@ -14,9 +14,9 @@
 {
     if (self = [super initWithWidth:width height:height])
     {
-        [self addChild:[[Player alloc] initWithBW:1]];
 		Level *level = [[Level alloc] initWithBackground:@"level_0.png"];
 		[self addChild:level];
+        [self addChild:[[Player alloc] initWithBW:1]];
 	}
     return self;
 }
