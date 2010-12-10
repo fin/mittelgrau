@@ -14,18 +14,22 @@
 @interface Level ()
 
 - (void)setupSprite;
-
+	
 @end
 
 // --- class implementation ------------------------------------------------------------------------
 
 @implementation Level
+-(Level*) background: (NSString*) backgroundPath {
+	self = [super init];
+	SPImage *background = [SPImage imageWithContentsOfFile:backgroundPath];
+	[self addChild:background];
+	return self;
+}
 
 - (id)init {
     if (self = [super init]) {
         [self setupSprite];
-		SPImage *backgroundImage = [SPImage imageWithContentsOfFile:@"tutorialbackground.png"];
-		
     }
     return self;
 }
