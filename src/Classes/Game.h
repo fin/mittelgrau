@@ -11,6 +11,11 @@
 #import "Level.h"
 #import "Player.h"
 
-@interface Game : SPStage
+@interface Game : SPStage {
+    Player *blackplayer;
+    Player *whiteplayer;
+}
 
+@property(retain) Player *blackplayer;
+@property(retain) Player *whiteplayer;
 @end
