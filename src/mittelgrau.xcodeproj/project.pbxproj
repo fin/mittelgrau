@@ -14,6 +14,8 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		303CFE4D12B27E7A0032ABEC /* player_facing_right_b.png in Resources */ = {isa = PBXBuildFile; fileRef = 303CFE4C12B27E7A0032ABEC /* player_facing_right_b.png */; };
 		588DBF6F12B1AEAE00CB27E5 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 588DBF6E12B1AEAE00CB27E5 /* Player.m */; };
+		5851185E12B27EDF00163166 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 5851185D12B27EDF00163166 /* Level.m */; };
+		5851186512B283CC00163166 /* level_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851186412B283CC00163166 /* level_0.png */; };
 		DE3F093811B7B9DC009D4DB0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE3F093711B7B9DC009D4DB0 /* AVFoundation.framework */; };
 		DE3F093A11B7B9DC009D4DB0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE3F093911B7B9DC009D4DB0 /* AudioToolbox.framework */; };
 		DE3F097811B7BABD009D4DB0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE3F097711B7BABD009D4DB0 /* OpenAL.framework */; };
@@ -59,6 +61,9 @@
 		32CA4F630368D1EE00C91783 /* Application_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application_Prefix.pch; sourceTree = "<group>"; };
 		588DBF6D12B1AEAE00CB27E5 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		588DBF6E12B1AEAE00CB27E5 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		5851185C12B27EDF00163166 /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Level.h; sourceTree = "<group>"; };
+		5851185D12B27EDF00163166 /* Level.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Level.m; sourceTree = "<group>"; };
+		5851186412B283CC00163166 /* level_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = level_0.png; path = Resources/LevelBackgrounds/level_0.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Application-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Application-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		DE3F093711B7B9DC009D4DB0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DE3F093911B7B9DC009D4DB0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -93,6 +98,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5851185C12B27EDF00163166 /* Level.h */,
+				5851185D12B27EDF00163166 /* Level.m */,
 				1D3623240D0F684500981E51 /* ApplicationDelegate.h */,
 				1D3623250D0F684500981E51 /* ApplicationDelegate.m */,
 				DE4A3DE310FFB2AF00FDA492 /* Game.h */,
@@ -137,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				30A3B22F12B288AD00D6C103 /* players */,
+				5851186412B283CC00163166 /* level_0.png */,
 				8D1107310486CEB800E47090 /* Application-Info.plist */,
 			);
 			name = Resources;
@@ -248,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				303CFE4D12B27E7A0032ABEC /* player_facing_right_b.png in Resources */,
+				5851186512B283CC00163166 /* level_0.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +271,7 @@
 				1D3623260D0F684500981E51 /* ApplicationDelegate.m in Sources */,
 				DE4A3DE510FFB2AF00FDA492 /* Game.m in Sources */,
 				588DBF6F12B1AEAE00CB27E5 /* Player.m in Sources */,
+				5851185E12B27EDF00163166 /* Level.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +314,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
