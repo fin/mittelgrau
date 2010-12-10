@@ -23,6 +23,9 @@
         quad.y = 50;
         [self addChild:quad];
         
+		
+		Level *level = [Level background:@"level_0.png"];
+		[self addChild: level];
         // Per default, this project compiles as an iPhone application. To change that, enter the 
         // project info screen, and in the "Build"-tab, find the setting "Targeted device family".
         //

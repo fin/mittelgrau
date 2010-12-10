@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Sparrow.h" 
+#import "Level.h"
 
 @interface Game : SPStage
 

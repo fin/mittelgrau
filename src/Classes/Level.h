@@ -12,5 +12,5 @@
 @interface Level : SPSprite {
 	SPImage *backgroundImage;
 }
-
+-(Level*)background: (NSString*) backgroundPath;
 @end

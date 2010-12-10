@@ -26,6 +26,7 @@
         [self setupSprite];        
     }
 	[self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
+	
     return self;
 }
 
