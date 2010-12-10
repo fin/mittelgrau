@@ -20,8 +20,8 @@
 // --- class implementation ------------------------------------------------------------------------
 
 @implementation Level
--(Level*) background: (NSString*) backgroundPath {
-	self = [super init];
+-(Level*) initWithBackground: (NSString*) backgroundPath {
+	self = [self init];
 	SPImage *background = [SPImage imageWithContentsOfFile:backgroundPath];
 	[self addChild:background];
 	return self;
