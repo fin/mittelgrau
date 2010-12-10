@@ -17,6 +17,7 @@
 		5851185E12B27EDF00163166 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 5851185D12B27EDF00163166 /* Level.m */; };
 		5851186512B283CC00163166 /* level_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851186412B283CC00163166 /* level_0.png */; };
 		5851191412B290EB00163166 /* StatusOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5851191312B290EB00163166 /* StatusOverlay.m */; };
+		5851193E12B2958700163166 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851193D12B2958700163166 /* Icon.png */; };
 		588DBF6F12B1AEAE00CB27E5 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 588DBF6E12B1AEAE00CB27E5 /* Player.m */; };
 		DE3F093811B7B9DC009D4DB0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE3F093711B7B9DC009D4DB0 /* AVFoundation.framework */; };
 		DE3F093A11B7B9DC009D4DB0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE3F093911B7B9DC009D4DB0 /* AudioToolbox.framework */; };
@@ -67,6 +68,7 @@
 		5851186412B283CC00163166 /* level_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = level_0.png; path = Resources/LevelBackgrounds/level_0.png; sourceTree = "<group>"; };
 		5851191212B290EB00163166 /* StatusOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusOverlay.h; sourceTree = "<group>"; };
 		5851191312B290EB00163166 /* StatusOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusOverlay.m; sourceTree = "<group>"; };
+		5851193D12B2958700163166 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Resources/Icon.png; sourceTree = "<group>"; };
 		588DBF6D12B1AEAE00CB27E5 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		588DBF6E12B1AEAE00CB27E5 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Application-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Application-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5851193D12B2958700163166 /* Icon.png */,
 				30A3B22F12B288AD00D6C103 /* players */,
 				5851186412B283CC00163166 /* level_0.png */,
 				8D1107310486CEB800E47090 /* Application-Info.plist */,
@@ -266,6 +269,7 @@
 				303CFE4D12B27E7A0032ABEC /* player_facing_right_b.png in Resources */,
 				5851186512B283CC00163166 /* level_0.png in Resources */,
 				30A3B2CB12B2910200D6C103 /* player_facing_right_w.png in Resources */,
+				5851193E12B2958700163166 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
