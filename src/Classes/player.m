@@ -6,20 +6,21 @@
 //  Copyright 2010 TU Wien. All rights reserved.
 //
 
-#import "player.h"
+#import "Player.h"
 
 
 // --- private interface ---------------------------------------------------------------------------
 
-@interface player ()
+@interface Player ()
 
 - (void)setupSprite;
+- (Player *)initWithBW:(int)isBlack;
 
 @end
 
 // --- class implementation ------------------------------------------------------------------------
 
-@implementation player
+@implementation Player
 
 - (id)init {
     if (self = [super init]) {
@@ -41,6 +42,17 @@
     NSLog(@"Time passed since last frame: %f", event.passedTime);
 //    [enemy moveBy:event.passedTime * enemy.velocity];
 }
+
+- (Player *)initWithBW:(int)isBlack {
+    [self init];
+//    [SPImage imageWithContentsOfFile:@"players/player_facing_right_w.png"]
+//    [self setImg:];
+    return self;
+};
+
+@synthesize img;
+@synthesize orientation;
+
 
 @end
 
