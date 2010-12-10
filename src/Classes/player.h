@@ -10,8 +10,14 @@
 
 #import <Sparrow.h>
 
-@interface player : SPSprite {
-	
+@interface Player : SPSprite {
+	SPImage *img;
+    int orientation;
 }
+
+- (Player *)initWithBW:(int)isBlack;
+
+@property (nonatomic, retain) SPImage *img;
+@property (nonatomic) int orientation;
 
 @end
