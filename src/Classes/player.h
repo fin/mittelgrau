@@ -13,15 +13,15 @@
 @interface Player : SPSprite {
 	SPImage *img;
     int orientation;
-    int deltaX;
-    int deltaY;
+    float deltaX;
+    float deltaY;
 }
 
 - (Player *)initWithBW:(int)isBlack;
 
 @property (nonatomic, retain) SPImage *img;
 @property (nonatomic) int orientation;
-@property (nonatomic) int deltaX;
-@property (nonatomic) int deltaY;
+@property (nonatomic) float deltaX;
+@property (nonatomic) float deltaY;
 
 @end

@@ -35,21 +35,77 @@
 - (void)onTouch:(SPTouchEvent *)event {
             NSLog(@" touches!");
 
-    NSArray *touches = [[event touchesWithTarget:self
+    NSArray *touches_started = [[event touchesWithTarget:self
+	    andPhase:SPTouchPhaseBegan] allObjects];
+    
+    NSArray *touches_moved = [[event touchesWithTarget:self
 	    andPhase:SPTouchPhaseMoved] allObjects];
     
-    if (touches.count >= 2) {
-        NSLog(@"two touches!");
-        SPTouch *touch1 = [touches objectAtIndex:0];
-        SPTouch *touch2 = [touches objectAtIndex:1];
-        
-        SPPoint *currentPos1 = [touch1 locationInSpace:self];
-        SPPoint *currentPos2 = [touch2 locationInSpace:self];
-        
-        [whiteplayer setdeltaX:([currentPos1 x] - [currentPos2 x])];
+    NSArray *touches_ended = [[event touchesWithTarget:self
+	    andPhase:SPTouchPhaseEnded] allObjects];
+    
+    for(SPTouch *t in touches_ended) {
+        PlayerControl *pc = [self getControlForEvent:t];
+        if(pc!=nil) {
+            [self removeChild:pc];
+            [self setControl:nil forEvent:t];
+        }
+    }
+    for(SPTouch *t in touches_started) {
+        PlayerControl *pc = [self getControlForEvent:t];
+        if(pc==nil) {
+            pc = [[PlayerControl alloc] initWithPlayer:[self eventIsBlack:t]?[self blackplayer]:[self whiteplayer]];
+        }
+        SPPoint *loc = [t locationInSpace:self];
+        [pc setX:[loc x]];
+        [pc setY:[loc y]];
+        [pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
+        [self setControl:pc forEvent:t];
+    }
+    for(SPTouch *t in touches_moved) {
+        SPPoint *prev = [t previousLocationInSpace:self];
+        if(prev==nil) {
+            return;
+        }
+        if([self control_white] != nil && ![self eventIsBlack:t]) {
+            if(([[self control_white] touchPosition]!=nil) &&
+                [SPPoint distanceFromPoint:[[self control_white] touchPosition] toPoint:prev] == 0) {
+                    [[self control_white] setTouchPosition:prev];
+                }
+        }
+        if([self control_black] != nil && [self eventIsBlack:t]){
+            if(([[self control_black] touchPosition]!=nil) &&
+                [SPPoint distanceFromPoint:[[self control_black] touchPosition] toPoint:prev] == 0) {
+                    [[self control_black] setTouchPosition:prev];
+                }
+        }
+    }
+}
+
+- (BOOL)eventIsBlack:(SPTouch *)e {
+    return [[e locationInSpace:self] y]<[self height]/2;
+}
+
+- (PlayerControl *)getControlForEvent:(SPTouch *)e {
+    if ([self eventIsBlack:e]) {
+        return control_black;
+    }
+    return control_white;
+}
+
+- (void)setControl:(PlayerControl *)ctl forEvent:(SPTouch *)e {
+    if(ctl!=nil) {
+        [self addChild:ctl];
+    }
+    if([self eventIsBlack:e]) {
+        [self setControl_black:ctl];
+    } else {
+        [self setControl_white:ctl];
     }
 }
 
 @synthesize blackplayer;
 @synthesize whiteplayer;
+@synthesize control_black;
+@synthesize control_white;
 @end

@@ -51,7 +51,7 @@
     [self setImg:[SPImage imageWithContentsOfFile:(isBlack?@"player_facing_right_b.png":@"player_facing_right_w.png")]];
     [self addChild:[self img]];
     return self;
-};
+}
 
 @synthesize img;
 @synthesize orientation;

@@ -10,12 +10,22 @@
 #import "Sparrow.h" 
 #import "Level.h"
 #import "Player.h"
+#import "PlayerControl.h"
 
 @interface Game : SPStage {
     Player *blackplayer;
     Player *whiteplayer;
+    
+    PlayerControl *control_black;
+    PlayerControl *control_white;
 }
+
+- (PlayerControl *)getControlForEvent:(SPTouch *)e;
+- (void)setControl:(PlayerControl *)ctl forEvent:(SPTouch *)e;
+- (BOOL)eventIsBlack:(SPTouch *)e;
 
 @property(retain) Player *blackplayer;
 @property(retain) Player *whiteplayer;
+@property(retain) PlayerControl *control_black;
+@property(retain) PlayerControl *control_white;
 @end
