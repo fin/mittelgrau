@@ -12,6 +12,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		5851185E12B27EDF00163166 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 5851185D12B27EDF00163166 /* Level.m */; };
+		5851186512B283CC00163166 /* level_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851186412B283CC00163166 /* level_0.png */; };
 		588DBF6F12B1AEAE00CB27E5 /* player.m in Sources */ = {isa = PBXBuildFile; fileRef = 588DBF6E12B1AEAE00CB27E5 /* player.m */; };
 		DE3F093811B7B9DC009D4DB0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE3F093711B7B9DC009D4DB0 /* AVFoundation.framework */; };
 		DE3F093A11B7B9DC009D4DB0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE3F093911B7B9DC009D4DB0 /* AudioToolbox.framework */; };
@@ -55,6 +57,9 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Application_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application_Prefix.pch; sourceTree = "<group>"; };
+		5851185C12B27EDF00163166 /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Level.h; sourceTree = "<group>"; };
+		5851185D12B27EDF00163166 /* Level.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Level.m; sourceTree = "<group>"; };
+		5851186412B283CC00163166 /* level_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = level_0.png; path = Resources/LevelBackgrounds/level_0.png; sourceTree = "<group>"; };
 		588DBF6D12B1AEAE00CB27E5 /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
 		588DBF6E12B1AEAE00CB27E5 /* player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = player.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Application-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Application-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -91,6 +96,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5851185C12B27EDF00163166 /* Level.h */,
+				5851185D12B27EDF00163166 /* Level.m */,
 				1D3623240D0F684500981E51 /* ApplicationDelegate.h */,
 				1D3623250D0F684500981E51 /* ApplicationDelegate.m */,
 				DE4A3DE310FFB2AF00FDA492 /* Game.h */,
@@ -134,6 +141,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5851186412B283CC00163166 /* level_0.png */,
 				8D1107310486CEB800E47090 /* Application-Info.plist */,
 			);
 			name = Resources;
@@ -236,6 +244,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5851186512B283CC00163166 /* level_0.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +259,7 @@
 				1D3623260D0F684500981E51 /* ApplicationDelegate.m in Sources */,
 				DE4A3DE510FFB2AF00FDA492 /* Game.m in Sources */,
 				588DBF6F12B1AEAE00CB27E5 /* player.m in Sources */,
+				5851185E12B27EDF00163166 /* Level.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
