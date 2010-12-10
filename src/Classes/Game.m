@@ -16,7 +16,7 @@
     {
         // this is where the code of your game will start. 
         // in this sample, we add just a simple quad to see if it works.
-        
+		
         SPQuad *quad = [SPQuad quadWithWidth:100 height:100];
         quad.color = 0xff0000;
         quad.x = 50;
