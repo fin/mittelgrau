@@ -60,7 +60,7 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		303CFE4C12B27E7A0032ABEC /* player_facing_right_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = player_facing_right_b.png; path = Resources/player_facing_right_b.png; sourceTree = "<group>"; };
-		30A3B2CA12B2910200D6C103 /* player_facing_right_w.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player_facing_right_w.png; sourceTree = "<group>"; };
+		30A3B2CA12B2910200D6C103 /* player_facing_right_w.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = player_facing_right_w.png; path = Resources/player_facing_right_w.png; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Application_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application_Prefix.pch; sourceTree = "<group>"; };
 		5851185C12B27EDF00163166 /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Level.h; sourceTree = "<group>"; };
 		5851185D12B27EDF00163166 /* Level.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Level.m; sourceTree = "<group>"; };

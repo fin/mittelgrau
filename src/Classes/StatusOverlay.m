@@ -24,7 +24,7 @@
 - (id)init {
     if (self = [super init]) {
         [self setupSprite];    
-		gravityBarWhite = [SPImage imageWithContentsOfFile:@""]
+		gravityBarWhite = [SPImage imageWithContentsOfFile:@""];
     }
     return self;
 }
