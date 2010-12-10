@@ -46,8 +46,8 @@
 
 - (Player *)initWithBW:(int)isBlack {
     [self init];
-//    [SPImage imageWithContentsOfFile:@"players/player_facing_right_w.png"]
-//    [self setImg:];
+    [self setImg:[SPImage imageWithContentsOfFile:(isBlack?@"player_facing_right_b.png":@"player_facing_right_w.png")]];
+    [self addChild:[self img]];
     return self;
 };
 
