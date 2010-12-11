@@ -27,10 +27,10 @@
 	SPImage *background = [SPImage imageWithContentsOfFile:backgroundPath];
 	[background setY:24];
 	[self addChild:background];
-    
+
 //	BOOL blackCollisionMap[(int)[background height]][(int)[background width]];
 //	BOOL whiteCollisionMap[(int)[background height]][(int)[background width]];
-    
+
     for(int i=0;i<768;i++) {
         for(int j=0;j<1024;j++) {
             blackCollisionMap[i][j]=false;
@@ -61,35 +61,8 @@
 
 - (void)getCollisionMapsFromImage:(UIImage*)image
 {
-    int width = [image size].width;
-    int height = [image size].height;
-    
-    NSArray *a = [self getRGBAsFromImage:image atX:0 andY:0 count:height*width];
-	int byteIndex = 0;
-    int x = 0;
-    int y = 0;
-
-    for(UIColor *c in a) {
-        y = floor(byteIndex/width);
-        x = byteIndex-(y*width);
-        float r = [c red];
-        float g = [c green];
-        float b = [c blue];
-        
-        if(r<=0 && g <= 0 && b <= 0) {
-            blackCollisionMap[x][y] = true;
-        } else if (r>=1 && g>=1 && b >= 1) {
-            whiteCollisionMap[x][y] = true;
-        }
-        byteIndex++;
-    }
-    NSLog(@"done");
-}
-
-
-- (NSArray*)getRGBAsFromImage:(UIImage*)image atX:(int)xx andY:(int)yy count:(int)count
-{
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:count];
+    int xx=0;
+    int yy=0;
 
     // First get the image into your data buffer
     CGImageRef imageRef = [image CGImage];
@@ -108,23 +81,54 @@
     CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);
     CGContextRelease(context);
 
+    int count = width*[image size].height;
+
+    
     // Now your rawData contains the image data in the RGBA8888 pixel format.
     int byteIndex = (bytesPerRow * yy) + xx * bytesPerPixel;
+    int x=xx;
+    int y=yy;
     for (int ii = 0 ; ii < count ; ++ii)
     {
-        CGFloat red   = (rawData[byteIndex]     * 1.0) / 255.0;
-        CGFloat green = (rawData[byteIndex + 1] * 1.0) / 255.0;
-        CGFloat blue  = (rawData[byteIndex + 2] * 1.0) / 255.0;
-        CGFloat alpha = (rawData[byteIndex + 3] * 1.0) / 255.0;
+        CGFloat r   = (rawData[byteIndex]     * 1.0) / 255.0;
+        CGFloat g = (rawData[byteIndex + 1] * 1.0) / 255.0;
+        CGFloat b  = (rawData[byteIndex + 2] * 1.0) / 255.0;
+//        CGFloat alpha = (rawData[byteIndex + 3] * 1.0) / 255.0;
         byteIndex += 4;
-
-        UIColor *acolor = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
-        [result addObject:acolor];
+        
+        if(r<=0 && g <= 0 && b <= 0) {
+            blackCollisionMap[x][y] = true;
+        } else if (r>=1 && g>=1 && b >= 1) {
+            whiteCollisionMap[x][y] = true;
+        }
+        x++;
+        if(x>=width) {
+            x=0;
+            y++;
+        }
     }
+    
+    NSLog(@"done");
 
-  free(rawData);
+    free(rawData);
+}
 
-  return result;
+- (BOOL)collides:(Player *)p isBlack:(BOOL)b {
+    int x = [p x];
+    int y = [p y];
+    int width = [p width];
+    int height = [p height];
+        
+    
+    
+    for(int i=0;i<width;i++) {
+        for(int j=0;j<height;j++) {
+            if((b?blackCollisionMap:whiteCollisionMap)[x+i][y+j]) {
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
 }
 
 @end

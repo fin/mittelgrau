@@ -20,6 +20,6 @@
 }
 - (Level*)initWithBackground: (NSString*)backgroundPath;
 - (void)getCollisionMapsFromImage: (UIImage*)image;
-- (NSArray*)getRGBAsFromImage:(UIImage*)image atX:(int)xx andY:(int)yy count:(int)count;
+- (BOOL)collides:(SPSprite *)s isBlack:(BOOL)b;
 
 @end
