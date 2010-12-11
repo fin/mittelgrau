@@ -200,8 +200,7 @@
     int y = [p y];
     int width = [p width];
     int height = [p height];
-        
-    
+
     
     for(int i=0;i<width;i++) {
         for(int j=0;j<height;j++) {
@@ -215,12 +214,44 @@
 
 
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
-//    [self playerCollides:whiteplayer];
-//    [self playerCollides:blackplayer];
+    [self playerCollides:whiteplayer isBlack:FALSE inFrame:event];
+    [self playerCollides:blackplayer isBlack:TRUE inFrame:event];
 }
 
-- (void)playerCollides:(Player *)player {
+- (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event {
+    Player_movement m = [player movementForFrame:event];
     
+    BOOL x_plus = m.x2>m.x1;
+    BOOL y_plus = m.y2>m.y1;
+    
+    int horizontal = y_plus?m.y2:m.y2+[player height];
+    int vertical = x_plus?m.x2:m.x2+[player width];
+
+    BOOL collide=true;
+    while(collide) {
+        collide=false;
+        for(int j=0;j<[player height]-2; j++) { // x axis
+            if((b?blackCollisionMap:whiteCollisionMap)[vertical+j][horizontal]) {
+                collide=true;
+                horizontal+=(x_plus)?1:-1;
+                break;
+            }
+        }
+    }
+    collide=true;
+    while(collide) {
+        for(int j=0;j<[player width]; j++) { // x axis
+            if((b?blackCollisionMap:whiteCollisionMap)[vertical][horizontal+j]) {
+                collide=true;
+                vertical+=(y_plus)?1:-1;
+                break;
+            }
+        }
+    }
+    horizontal-=y_plus?0:[player height];
+    vertical-=x_plus?0:[player width];
+    [player setX:vertical];
+    [player setY:horizontal];
 }
 
 @synthesize blackplayer;

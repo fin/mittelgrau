@@ -43,11 +43,14 @@
     [super dealloc];
 }
 
-- (void) onEnterFrame:(SPEnterFrameEvent *)event
-{
-	[self setX: self.x + event.passedTime * deltaX];
-	[self setY: self.y + event.passedTime * deltaY];
-	[self setY: self.y + event.passedTime * self.gravity * orientation];
+- (Player_movement) movementForFrame:(SPEnterFrameEvent *)event {
+    Player_movement m;
+    m.x1 = [self x];
+    m.x2 = self.x + event.passedTime * deltaX;
+    m.y1 = [self y];
+    m.y2 = self.y + event.passedTime * deltaY + event.passedTime * self.gravity * orientation;
+    
+    return m;
 }
 
 - (Player *)initWithIsBlack:(int)b {
