@@ -44,12 +44,10 @@
 }
 
 - (void)dealloc {
-    [[self player] dealloc];
     [super dealloc];
 }
 
 - (void)setTouchPosition:(SPPoint *)p {
-    NSLog(@"lol!");
 
     touchPosition = p;
     
