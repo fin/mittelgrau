@@ -48,13 +48,15 @@
     m.x1 = (int) [self x];
     m.x2 = (self.x + ceil(event.passedTime * deltaX));
     m.y1 = (int) [self y];
-    m.y2 = (self.y + event.passedTime * self.gravity * orientation);
+    m.y2 = ([self y] + (int)(event.passedTime * self.gravity * orientation));
+    
+  //  NSLog(@"diff: %d; (%f|%f|%f) %d", m.y2 - m.y1, event.passedTime, self.gravity, orientation, (int)(event.passedTime * self.gravity * orientation));
     
     return m;
 }
 
 - (Player *)initWithIsBlack:(int)b {
-    [self init];
+    self = [self init];
     [self setIsBlack:b];
     [self setImg:[SPImage imageWithContentsOfFile:(isBlack?@"player_facing_right_b.png":@"player_facing_right_w.png")]];
 	if ([self isBlack] == 0) {

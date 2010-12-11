@@ -274,18 +274,20 @@
         m.y2 = 0;
     }
 
+    NSLog(@"Y: %d + %d", m.y1, m.y2-m.y1);
     
     BOOL steep = abs(m.y2 - m.y1) > abs(m.x2 - m.x1);
     if(steep) {
-        int tmp = m.x1;
+        int tmp = m.y1;
         m.y1 = m.x1;
         m.x1 = tmp;
-        tmp = m.x2;
+        tmp = m.y2;
         m.y2 = m.x2;
         m.x2 = tmp;
     }
     int deltax = abs(m.x2 - m.x1);
     int deltay = abs(m.y2 - m.y1);
+    NSLog(@"dx/dy: %d/%d; %@", deltax, deltay, steep?@"steep":@"");
     int error = deltax / 2;
     int ystep;
     int y = m.y1;
@@ -303,19 +305,18 @@
         ystep = -1;
     }
     BOOL collision = FALSE;
-    for(int x=m.x1; x<m.x2; x+=inc) {
+    for(int x=m.x1; x!=m.x2; x+=inc) {
         if(collision)
             break;
         for(int xcorner=0;xcorner<=1;xcorner++) {
             for(int ycorner=0;ycorner<=1;ycorner++) {
                 if((b?blackCollisionMap:whiteCollisionMap)[xcorner*(int)[player width]+(steep?y:x)][ycorner*(int)[player height]+(steep?x:y)]) {
                     collision=TRUE;
+                    NSLog(@"collision!");
                     if(xcorner>0) {
-                        NSLog(@"deltax=0");
                         [player setDeltaX:0];
                     }
                     if(ycorner>0) {
-                        NSLog(@"deltay=0");
                         [player setDeltaY:0];
                     }
                     break;
@@ -330,6 +331,7 @@
         }
         [player setX:(steep?y:x)];
         [player setY:(steep?x:y)];
+        NSLog(@"set: %d", (steep?x:y));
     }
 }
 
