@@ -36,6 +36,9 @@
 - (PlayerControl *)getControlForEvent:(SPTouch *)e;
 - (void)setControl:(PlayerControl *)ctl isBlack:(BOOL)b;
 - (BOOL)eventIsBlack:(SPTouch *)e;
+- (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event;
+- (void)onEnterFrame:(SPEnterFrameEvent *)event;
+
 
 @property(retain) Player *blackplayer;
 @property(retain) Player *whiteplayer;

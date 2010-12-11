@@ -10,6 +10,16 @@
 
 #import <Sparrow.h>
 
+@class Player;
+
+typedef struct {
+    int x1;
+    int x2;
+    int y1;
+    int y2;
+} Player_movement;
+
+
 @interface Player : SPSprite {
 	SPImage *img;
     int orientation;
@@ -21,6 +31,7 @@
 
 - (Player *)initWithIsBlack:(int)b;
 - (void) toggleOrientation;
+- (Player_movement) movementForFrame:(SPEnterFrameEvent *)event;
 
 @property (nonatomic, retain) SPImage *img;
 @property (nonatomic) int orientation;

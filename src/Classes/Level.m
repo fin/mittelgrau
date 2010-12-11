@@ -22,8 +22,7 @@
 
 @implementation Level
 -(Level*) initWithBackground: (NSString*) backgroundPath {
-	self = [self init];
-	
+	self = [self init];	
 	//set background and add to display tree
 	[self setBackgroundImage:[SPImage imageWithContentsOfFile:backgroundPath]];
 	[backgroundImage setY:24];
@@ -44,10 +43,12 @@
         }
     }
 	
-	//initialize our collision maps
-
 	UIImage *backdrop = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"level_0" ofType:@"png"]];
 	[self getCollisionMapsFromImage:backdrop];
+    
+    
+    [self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
+
 	return self;
 }
 
@@ -120,7 +121,7 @@
 }
 
 - (void)onTouch:(SPTouchEvent *)event {
-	
+/*
     NSArray *touches_started = [[event touchesWithTarget:self
 									   andPhase:SPTouchPhaseBegan] allObjects];
     
@@ -184,6 +185,7 @@
 			}
         }
     }
+ */
 }
 
 - (BOOL)eventIsBlack:(SPTouch *)e {
@@ -225,8 +227,7 @@
     int y = [p y];
     int width = [p width];
     int height = [p height];
-        
-    
+
     
     for(int i=0;i<width;i++) {
         for(int j=0;j<height;j++) {
@@ -250,12 +251,76 @@
 }
 
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
-//    [self playerCollides:whiteplayer];
-//    [self playerCollides:blackplayer];
+    NSLog(@"FRAME!");
+    [self playerCollides:whiteplayer isBlack:FALSE inFrame:event];
+    [self playerCollides:blackplayer isBlack:TRUE inFrame:event];
 }
 
-- (void)playerCollides:(Player *)player {
+- (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event {
+    Player_movement m = [player movementForFrame:event];
+    if(m.x2 + [player width] > [self width]) {
+        m.x2 = [self width] - [player width];
+    }
+    if(m.y2 + [player height] > [self height]) {
+        m.y2 = [self height] - [player height];
+    }
+
     
+    BOOL steep = abs(m.y2 - m.y1) > abs(m.x2 - m.x1);
+    if(steep) {
+        int tmp = m.x1;
+        m.y1 = m.x1;
+        m.x1 = tmp;
+        tmp = m.x2;
+        m.y2 = m.x2;
+        m.x2 = tmp;
+    }
+    int deltax = abs(m.x2 - m.x1);
+    int deltay = abs(m.y2 - m.y1);
+    int error = deltax / 2;
+    int ystep;
+    int y = m.y1;
+  
+    int inc;
+    if(m.x1 < m.x2){
+        inc = 1;
+    } else {
+        inc = -1;
+    }
+ 
+    if(m.y1 < m.y2) {
+        ystep = 1;
+    } else {
+        ystep = -1;
+    }
+    BOOL collision = FALSE;
+    for(int x=m.x1; x<m.x2; x+=inc) {
+        if(collision)
+            break;
+        for(int xcorner=0;xcorner<=1;xcorner++) {
+            for(int ycorner=0;ycorner<=1;ycorner++) {
+                if((b?blackCollisionMap:whiteCollisionMap)[xcorner*(int)[player width]+(steep?y:x)][ycorner*(int)[player height]+(steep?x:y)]) {
+                    NSLog(@"COLLIDE! %d, %d", xcorner, ycorner);
+                    collision=TRUE;
+                    if(xcorner>0) {
+                        [player setDeltaX:0];
+                    }
+                    if(ycorner>0) {
+                        [player setDeltaY:0];
+                    }
+                    break;
+                }
+            }
+        }
+        // REM increment here a variable to control the progress of the line drawing
+        error = error - deltay;
+        if(error < 0) {
+            y = y + ystep;
+            error = error + deltax;
+        }
+        [player setX:(steep?y:x)];
+        [player setY:(steep?x:y)];
+    }
 }
 
 @synthesize blackplayer;
