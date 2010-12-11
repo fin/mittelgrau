@@ -17,6 +17,7 @@
 		30A3B38812B2B10600D6C103 /* controller.png in Resources */ = {isa = PBXBuildFile; fileRef = 30A3B38712B2B10600D6C103 /* controller.png */; };
 		30A3B39C12B2B42900D6C103 /* PlayerControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A3B39B12B2B42900D6C103 /* PlayerControl.m */; };
 		580A7ADE12B3B4D600CA181E /* controller-position.png in Resources */ = {isa = PBXBuildFile; fileRef = 580A7ADD12B3B4D600CA181E /* controller-position.png */; };
+		30A3B56912B3B39700D6C103 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A3B56812B3B39700D6C103 /* UIColor-Expanded.m */; };
 		5851185E12B27EDF00163166 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 5851185D12B27EDF00163166 /* Level.m */; };
 		5851186512B283CC00163166 /* level_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851186412B283CC00163166 /* level_0.png */; };
 		5851191412B290EB00163166 /* StatusOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5851191312B290EB00163166 /* StatusOverlay.m */; };
@@ -68,6 +69,8 @@
 		30A3B38712B2B10600D6C103 /* controller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = controller.png; path = Resources/controller.png; sourceTree = "<group>"; };
 		30A3B39A12B2B42900D6C103 /* PlayerControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerControl.h; sourceTree = "<group>"; };
 		30A3B39B12B2B42900D6C103 /* PlayerControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerControl.m; sourceTree = "<group>"; };
+		30A3B56712B3B39700D6C103 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
+		30A3B56812B3B39700D6C103 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Application_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Application_Prefix.pch; sourceTree = "<group>"; };
 		580A7ADD12B3B4D600CA181E /* controller-position.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "controller-position.png"; path = "Resources/controller-position.png"; sourceTree = "<group>"; };
 		5851185C12B27EDF00163166 /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Level.h; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				588DBF6E12B1AEAE00CB27E5 /* Player.m */,
 				30A3B39A12B2B42900D6C103 /* PlayerControl.h */,
 				30A3B39B12B2B42900D6C103 /* PlayerControl.m */,
+				30A3B56712B3B39700D6C103 /* UIColor-Expanded.h */,
+				30A3B56812B3B39700D6C103 /* UIColor-Expanded.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -300,6 +305,7 @@
 				5851185E12B27EDF00163166 /* Level.m in Sources */,
 				5851191412B290EB00163166 /* StatusOverlay.m in Sources */,
 				30A3B39C12B2B42900D6C103 /* PlayerControl.m in Sources */,
+				30A3B56912B3B39700D6C103 /* UIColor-Expanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
