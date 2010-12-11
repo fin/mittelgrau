@@ -118,9 +118,7 @@
     int y = [p y];
     int width = [p width];
     int height = [p height];
-    
-    NSLog(@"collide: %d %d / %d %d", x, y, width, height);
-    
+        
     
     
     for(int i=0;i<width;i++) {
