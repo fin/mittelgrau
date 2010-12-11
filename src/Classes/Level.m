@@ -139,11 +139,13 @@
 			if ([self eventIsBlack:t]) {
 				NSLog(@"crating blackplayer");
 				pc = [[PlayerControl alloc] initWithPlayer:[self blackplayer]];
-				[self setControl:pc isBlack:YES];
+				[pc setIsBlack:YES];
+				[self setControl:pc];
 			} else {
 				NSLog(@"crating whiteplayer");
 				pc = [[PlayerControl alloc] initWithPlayer:[self whiteplayer]];
-				[self setControl:pc isBlack:NO];
+				[pc setIsBlack:NO];
+				[self setControl:pc];
 			}
 			
             SPPoint *loc = [t locationInSpace:self]; 
@@ -209,10 +211,10 @@
     return control_white;
 }
 
-- (void)setControl:(PlayerControl *)ctl isBlack:(BOOL)b {
+- (void)setControl:(PlayerControl *)ctl {
     if(ctl!=nil) {
         [self addChild:ctl];
-		if (b) {
+		if ([ctl isBlack]) {
 			[self setControl_black:ctl];
 		} else {
 			[self setControl_white:ctl];
@@ -242,14 +244,18 @@
 	if(pc!=nil) {
 		NSLog([self eventIsBlack: t]?@"removing black pc":@"removing white pc");
 		[self removeChild:pc];
-		
+		if ([pc isBlack]) {
+			[self setControl_black:nil];
+		} else {
+			[self setControl_white:nil];
+		}
 		[pc dealloc];
 		NSLog(@"done removing");
 	}
 }
 
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
-    //[self playerCollides:blackplayer isBlack:TRUE inFrame:event];
+    [self playerCollides:blackplayer isBlack:TRUE inFrame:event];
     [self playerCollides:whiteplayer isBlack:FALSE inFrame:event];
 }
 
