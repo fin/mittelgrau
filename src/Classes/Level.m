@@ -115,7 +115,6 @@
         }
     }
     
-    NSLog(@"done");
 
     free(rawData);
 }
@@ -137,12 +136,10 @@
         PlayerControl *pc = [self getControlForEvent:t];
         if(pc==nil) {
 			if ([self eventIsBlack:t]) {
-				NSLog(@"crating blackplayer");
 				pc = [[PlayerControl alloc] initWithPlayer:[self blackplayer]];
 				[pc setIsBlack:YES];
 				[self setControl:pc];
 			} else {
-				NSLog(@"crating whiteplayer");
 				pc = [[PlayerControl alloc] initWithPlayer:[self whiteplayer]];
 				[pc setIsBlack:NO];
 				[self setControl:pc];
@@ -156,7 +153,6 @@
 		}
     }
     for(SPTouch *t in touches_moved) {
-		NSLog(@"next touch event..");
         SPPoint *prev = [t previousLocationInSpace:self];
 		SPPoint *cur = [t locationInSpace:self];
         if(prev==nil) {
@@ -168,20 +164,15 @@
 			   [SPPoint distanceFromPoint:cur toPoint:prev] <= 50) {
 				[[self control_white] setTouchPosition:prev];
 			} else {
-				NSLog(@"distance: %f", [SPPoint distanceFromPoint:[[self control_white] touchPosition] toPoint:prev]);
 				[self removePlayerControl: t];
 			}
 
         }
         if([self control_black] != nil && [self eventIsBlack:t]){
-			NSLog(@"nillll!!!");
-			NSLog(@"distance would be: %f",  [SPPoint distanceFromPoint:cur toPoint:prev]);
-			NSLog(@"touch position: %f", [[self control_black] touchPosition]);
             if(([[self control_black] touchPosition]!=nil) &&
 			   [SPPoint distanceFromPoint:cur toPoint:prev] <= 50) {
 				[[self control_black] setTouchPosition:prev];
 			} else {
-				NSLog(@"distance: %f", [SPPoint distanceFromPoint:[[self control_black] touchPosition] toPoint:prev]);
 				[self removePlayerControl: t];
 			}
         }
@@ -242,16 +233,15 @@
 - (void)removePlayerControl:(SPTouch *)t {
 	PlayerControl *pc = [self getControlForEvent:t];
 	if(pc!=nil) {
-		NSLog([self eventIsBlack: t]?@"removing black pc":@"removing white pc");
 		[self removeChild:pc];
 		if ([pc isBlack]) {
 			[self setControl_black:nil];
 		} else {
 			[self setControl_white:nil];
 		}
-		[pc dealloc];
-		NSLog(@"done removing");
+		//[pc dealloc]; //it's a bloody prototype
 	}
+	
 }
 
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
@@ -274,7 +264,6 @@
         m.y2 = 0;
     }
 
-    NSLog(@"Y: %d + %d", m.y1, m.y2-m.y1);
     
     BOOL steep = abs(m.y2 - m.y1) > abs(m.x2 - m.x1);
     if(steep) {
@@ -287,7 +276,6 @@
     }
     int deltax = abs(m.x2 - m.x1);
     int deltay = abs(m.y2 - m.y1);
-    NSLog(@"dx/dy: %d/%d; %@", deltax, deltay, steep?@"steep":@"");
     int error = deltax / 2;
     int ystep;
     int y = m.y1;
@@ -331,7 +319,7 @@
         }
         [player setX:(steep?y:x)];
         [player setY:(steep?x:y)];
-        NSLog(@"set: %d", (steep?x:y));
+
     }
 }
 
