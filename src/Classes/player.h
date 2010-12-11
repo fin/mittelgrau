@@ -16,7 +16,8 @@
     float deltaX;
     float deltaY;
     BOOL isBlack;
-
+    int lockX;
+    int lockY;
 }
 
 - (Player *)initWithIsBlack:(int)b;
@@ -26,5 +27,7 @@
 @property (nonatomic) float deltaX;
 @property (nonatomic) float deltaY;
 @property (nonatomic) BOOL isBlack;
+@property (nonatomic) int lockX;
+@property (nonatomic) int lockY;
 
 @end

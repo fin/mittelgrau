@@ -39,11 +39,10 @@
     [super dealloc];
 }
 
-- (void)onEnterFrame:(SPEnterFrameEvent *)event
+- (void) onEnterFrame:(SPEnterFrameEvent *)event
 {
-	[self setX: self.x + event.passedTime * deltaX];
-	[self setY: self.y + event.passedTime * deltaY];
-    
+    [self setX: self.x + event.passedTime * deltaX];
+    [self setY: self.y + event.passedTime * deltaY];
 }
 
 - (Player *)initWithIsBlack:(int)b {
@@ -59,7 +58,8 @@
 @synthesize deltaX;
 @synthesize deltaY;
 @synthesize isBlack;
-
+@synthesize lockX;
+@synthesize lockY;
 
 @end
 

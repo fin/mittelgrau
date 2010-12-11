@@ -142,12 +142,13 @@
         PlayerControl *pc = [self getControlForEvent:t];
         if(pc==nil) {
             pc = [[PlayerControl alloc] initWithPlayer:[self eventIsBlack:t]?[self blackplayer]:[self whiteplayer]];
+        
+            SPPoint *loc = [t locationInSpace:self];
+            [pc setX:[loc x]];
+            [pc setY:[loc y]];
+            [pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
+            [self setControl:pc forEvent:t];
         }
-        SPPoint *loc = [t locationInSpace:self];
-        [pc setX:[loc x]];
-        [pc setY:[loc y]];
-        [pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
-        [self setControl:pc forEvent:t];
     }
     for(SPTouch *t in touches_moved) {
         SPPoint *prev = [t previousLocationInSpace:self];
@@ -207,6 +208,16 @@
         }
     }
     return FALSE;
+}
+
+
+- (void)onEnterFrame:(SPEnterFrameEvent *)event {
+//    [self playerCollides:whiteplayer];
+//    [self playerCollides:blackplayer];
+}
+
+- (void)playerCollides:(Player *)player {
+    
 }
 
 @synthesize blackplayer;
