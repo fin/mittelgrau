@@ -24,7 +24,16 @@
 - (id)init {
     if (self = [super init]) {
         [self setupSprite];    
-		gravityBarWhite = [SPImage imageWithContentsOfFile:@""];
+		[self setGravityBarWhite: [SPImage imageWithContentsOfFile:@"gravity_bar_white.png"]];
+		[gravityBarWhite setY: 0];
+		[self setGravityBarBlack: [SPImage imageWithContentsOfFile:@"gravity_bar_black.png"]];
+		[gravityBarBlack setY: 1000];
+		[self setX:0];
+		[self setY:0];
+		[self setWidth:768];
+		[self setHeight:1024];
+		[self addChild: gravityBarBlack];
+		[self addChild: gravityBarWhite];
     }
     return self;
 }
@@ -35,6 +44,7 @@
 - (void)dealloc {
     [super dealloc];
 }
-
+@synthesize gravityBarWhite;
+@synthesize gravityBarBlack;
 @end
 

@@ -16,4 +16,6 @@
 	SPImage *gravityBarBlack;
 }
 
+@property(retain) SPImage *gravityBarWhite;
+@property(retain) SPImage *gravityBarBlack;
 @end

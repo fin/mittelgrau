@@ -27,6 +27,8 @@
         
         [self addEventListener:@selector(onTouch:) atObject:self
 	               forType:SP_EVENT_TYPE_TOUCH];
+		[self setStatusOverlay:[[StatusOverlay alloc] init]];
+		[self addChild: statusOverlay];
         
 	}
     return self;
@@ -108,4 +110,5 @@
 @synthesize whiteplayer;
 @synthesize control_black;
 @synthesize control_white;
+@synthesize statusOverlay;
 @end

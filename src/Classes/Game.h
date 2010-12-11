@@ -11,6 +11,7 @@
 #import "Level.h"
 #import "Player.h"
 #import "PlayerControl.h"
+#import "StatusOverlay.h"
 
 @interface Game : SPStage {
     Player *blackplayer;
@@ -18,6 +19,7 @@
     
     PlayerControl *control_black;
     PlayerControl *control_white;
+	StatusOverlay *statusOverlay;
 }
 
 - (PlayerControl *)getControlForEvent:(SPTouch *)e;
@@ -28,4 +30,5 @@
 @property(retain) Player *whiteplayer;
 @property(retain) PlayerControl *control_black;
 @property(retain) PlayerControl *control_white;
+@property(retain) StatusOverlay *statusOverlay;
 @end
