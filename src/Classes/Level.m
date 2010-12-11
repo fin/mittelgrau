@@ -25,9 +25,9 @@
 	self = [self init];
 	
 	//set background and add to display tree
-	SPImage *background = [SPImage imageWithContentsOfFile:backgroundPath];
-	[background setY:24];
-	[self addChild:background];
+	[self setBackgroundImage:[SPImage imageWithContentsOfFile:backgroundPath]];
+	[backgroundImage setY:24];
+	[self addChild:backgroundImage];
 	
 	[self setWhiteplayer:[[Player alloc] initWithIsBlack: 0]];
 	[self setBlackplayer:[[Player alloc] initWithIsBlack: 1]];
@@ -126,32 +126,35 @@
     
     NSArray *touches_moved = [[event touchesWithTarget:self
 									 andPhase:SPTouchPhaseMoved] allObjects];
-    
+	
     NSArray *touches_ended = [[event touchesWithTarget:self
 									 andPhase:SPTouchPhaseEnded] allObjects];
     
     for(SPTouch *t in touches_ended) {
-        PlayerControl *pc = [self getControlForEvent:t];
-        if(pc!=nil) {
-			NSLog(@"pc not nil!!!");
-            [self removeChild:pc];
-			[pc dealloc];
-            [self setControl:nil forEvent:t];
-        }
+		[self removePlayerControl: t];
     }
     for(SPTouch *t in touches_started) {
         PlayerControl *pc = [self getControlForEvent:t];
         if(pc==nil) {
-            pc = [[PlayerControl alloc] initWithPlayer:[self eventIsBlack:t]?[self blackplayer]:[self whiteplayer]];
-        
-            SPPoint *loc = [t locationInSpace:self];
+			if ([self eventIsBlack:t]) {
+				NSLog(@"crating blackplayer");
+				pc = [[PlayerControl alloc] initWithPlayer:[self blackplayer]];
+				[self setControl:pc isBlack:YES];
+			} else {
+				NSLog(@"crating whiteplayer");
+				pc = [[PlayerControl alloc] initWithPlayer:[self whiteplayer]];
+				[self setControl:pc isBlack:NO];
+			}
+			
+            SPPoint *loc = [t locationInSpace:self]; 
             [pc setX:[loc x]];
             [pc setY:[loc y]];
             [pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
-            [self setControl:pc forEvent:t];
+            
 		}
     }
     for(SPTouch *t in touches_moved) {
+		NSLog(@"next touch event..");
         SPPoint *prev = [t previousLocationInSpace:self];
 		SPPoint *cur = [t locationInSpace:self];
         if(prev==nil) {
@@ -169,8 +172,11 @@
 
         }
         if([self control_black] != nil && [self eventIsBlack:t]){
+			NSLog(@"nillll!!!");
             if(([[self control_black] touchPosition]!=nil) &&
 			   [SPPoint distanceFromPoint: cur toPoint:prev] <= 50) {
+				NSLog(@"current: %f : %f", [cur x], [cur y]);
+				NSLog(@"prev: %f : %f", [prev x], [prev y]);
 				[[self control_black] setTouchPosition:prev];
 			} else {
 				NSLog(@"distance: %f", [SPPoint distanceFromPoint:[[self control_white] touchPosition] toPoint:prev]);
@@ -181,7 +187,18 @@
 }
 
 - (BOOL)eventIsBlack:(SPTouch *)e {
-    return [[e locationInSpace:self] y]<[self height]/2;
+	if ([[e locationInSpace:self] y] >= [backgroundImage height]/2) {
+		NSLog(@"event is black");
+		NSLog(@"height: %f", [backgroundImage height]);
+		NSLog(@"y is %f", [[e locationInSpace:self] y]);
+		
+		return YES;
+	} else {
+		NSLog(@"event is white");
+		NSLog(@"height: %f", [backgroundImage height]);
+		NSLog(@"y is %f", [[e locationInSpace:self] y]);
+		return NO;
+	}
 }
 
 - (PlayerControl *)getControlForEvent:(SPTouch *)e {
@@ -192,14 +209,14 @@
     return control_white;
 }
 
-- (void)setControl:(PlayerControl *)ctl forEvent:(SPTouch *)e {
+- (void)setControl:(PlayerControl *)ctl isBlack:(BOOL)b {
     if(ctl!=nil) {
         [self addChild:ctl];
-    }
-    if([self eventIsBlack:e]) {
-        [self setControl_black:ctl];
-    } else {
-        [self setControl_white:ctl];
+		if (b) {
+			[self setControl_black:ctl];
+		} else {
+			[self setControl_white:ctl];
+		}
     }
 }
 
@@ -224,10 +241,10 @@
 - (void)removePlayerControl:(SPTouch *)t {
 	PlayerControl *pc = [self getControlForEvent:t];
 	if(pc!=nil) {
-		NSLog([self eventIsBlack:t]?@"removing white pc":@"removing black pc");
+		NSLog([self eventIsBlack: t]?@"removing black pc":@"removing white pc");
 		[self removeChild:pc];
+		
 		[pc dealloc];
-		[self setControl:nil forEvent:t];
 		NSLog(@"done removing");
 	}
 }
@@ -245,6 +262,7 @@
 @synthesize whiteplayer;
 @synthesize control_black;
 @synthesize control_white;
+@synthesize backgroundImage;
 
 @end
 

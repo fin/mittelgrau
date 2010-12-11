@@ -10,10 +10,12 @@
 #import <Sparrow.h>
 #import <Player.h>
 
+@class PlayerControl;
+
 @interface PlayerControl : SPSprite {
 	Player *player;
     SPPoint *touchPosition;
-	
+	BOOL isBlack;
 @private
 	SPImage *posimg;
 }
@@ -23,5 +25,6 @@
 @property(retain) SPPoint *touchPosition;
 @property(retain) Player *player;
 @property(retain) SPImage *posimg;
+@property BOOL isBlack;
 
 @end

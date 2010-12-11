@@ -62,6 +62,7 @@
 
 @synthesize player;
 @synthesize posimg;
+@synthesize isBlack;
 
 @end
 

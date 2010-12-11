@@ -31,15 +31,16 @@
 - (void)getCollisionMapsFromImage: (UIImage*)image;
 - (BOOL)collides:(SPSprite *)s isBlack:(BOOL)b;
 
-- (void)removePlayerControl;
+- (void)removePlayerControl:(SPTouch *)t;
 
 - (PlayerControl *)getControlForEvent:(SPTouch *)e;
-- (void)setControl:(PlayerControl *)ctl forEvent:(SPTouch *)e;
+- (void)setControl:(PlayerControl *)ctl isBlack:(BOOL)b;
 - (BOOL)eventIsBlack:(SPTouch *)e;
 
 @property(retain) Player *blackplayer;
 @property(retain) Player *whiteplayer;
 @property(retain) PlayerControl *control_black;
 @property(retain) PlayerControl *control_white;
+@property(retain) SPImage *backgroundImage;
 
 @end
