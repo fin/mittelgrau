@@ -121,6 +121,8 @@
 
 - (void)onTouch:(SPTouchEvent *)event {
 	NSLog(@" touches!");
+	[blackplayer toggleOrientation];
+	[whiteplayer toggleOrientation];
 	
     NSArray *touches_started = [[event touchesWithTarget:self
 												andPhase:SPTouchPhaseBegan] allObjects];

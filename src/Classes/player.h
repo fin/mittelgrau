@@ -16,15 +16,18 @@
     float deltaX;
     float deltaY;
     BOOL isBlack;
+	int gravity;
 
 }
 
 - (Player *)initWithIsBlack:(int)b;
+- (void) toggleOrientation;
 
 @property (nonatomic, retain) SPImage *img;
 @property (nonatomic) int orientation;
 @property (nonatomic) float deltaX;
 @property (nonatomic) float deltaY;
 @property (nonatomic) BOOL isBlack;
+@property (nonatomic) int gravity;
 
 @end
