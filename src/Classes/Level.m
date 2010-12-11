@@ -27,23 +27,14 @@
 	SPImage *background = [SPImage imageWithContentsOfFile:backgroundPath];
 	[background setY:24];
 	[self addChild:background];
-	
-	BOOL blackCollisionMap[768][1024];
-	BOOL whiteCollisionMap[768][1024];
+    
+	BOOL blackCollisionMap[(int)[background height]][(int)[background width]];
+	BOOL whiteCollisionMap[(int)[background height]][(int)[background width]];
 	
 	//initialize our collision maps
 
-	/*
-	for (int i = 0; i <= 767; i++) {
-		for (int j = 0; j <= 1023; j++) {
-			
-			blackCollisionMap[i][j] = YES;
-			whiteCollisionMap[i][j] = YES;
-		}
-	}*/
 	UIImage *backdrop = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"level_0" ofType:@"png"]];
 	[self getCollisionMapsFromImage:backdrop];
-	
 	return self;
 }
 
@@ -63,26 +54,21 @@
 
 - (void)getCollisionMapsFromImage:(UIImage*)image
 {
-    // First get the image into your data buffer
-    CGImageRef imageRef = [image CGImage];
-    NSUInteger width = CGImageGetWidth(imageRef);
-    NSUInteger height = CGImageGetHeight(imageRef);
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    unsigned char *rawData = malloc(height * width * 4);
-    NSUInteger bytesPerPixel = 4;
-    NSUInteger bytesPerRow = bytesPerPixel * width;
-    NSUInteger bitsPerComponent = 8;
-    CGContextRef context = CGBitmapContextCreate(rawData, width, height,
-												 bitsPerComponent, bytesPerRow, colorSpace,
-												 kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-	CGColorSpaceRelease(colorSpace);
+    int width = [image size].width;
+    int height = [image size].height;
     
-	
-    CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);
-    CGContextRelease(context);
-	
+    NSArray *a = [self getRGBAsFromImage:image atX:1 andY:1 count:height*width];
 	int byteIndex = 0;
-	for (int i = 0; i < height; i++) {
+    int x = 0;
+    int y = 0;
+
+    for(UIColor *c in a) {
+        y = floor(byteIndex/width);
+        x = byteIndex-(y*width);
+        NSLog(@"%d:%d :: %f/%f/%f", x, y, [c red], [c green], [c blue]);
+        byteIndex++;
+    }
+/*	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			
 			CGFloat red   = (rawData[byteIndex]     * 1.0) / 255.0;
@@ -99,7 +85,49 @@
 			}
 		}
 	}
-	free(rawData);
+ */
 }
+
+
+- (NSArray*)getRGBAsFromImage:(UIImage*)image atX:(int)xx andY:(int)yy count:(int)count
+{
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:count];
+
+    // First get the image into your data buffer
+    CGImageRef imageRef = [image CGImage];
+    NSUInteger width = CGImageGetWidth(imageRef);
+    NSUInteger height = CGImageGetHeight(imageRef);
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    unsigned char *rawData = malloc(height * width * 4);
+    NSUInteger bytesPerPixel = 4;
+    NSUInteger bytesPerRow = bytesPerPixel * width;
+    NSUInteger bitsPerComponent = 8;
+    CGContextRef context = CGBitmapContextCreate(rawData, width, height,
+                    bitsPerComponent, bytesPerRow, colorSpace,
+                    kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGColorSpaceRelease(colorSpace);
+
+    CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);
+    CGContextRelease(context);
+
+    // Now your rawData contains the image data in the RGBA8888 pixel format.
+    int byteIndex = (bytesPerRow * yy) + xx * bytesPerPixel;
+    for (int ii = 0 ; ii < count ; ++ii)
+    {
+        CGFloat red   = (rawData[byteIndex]     * 1.0) / 255.0;
+        CGFloat green = (rawData[byteIndex + 1] * 1.0) / 255.0;
+        CGFloat blue  = (rawData[byteIndex + 2] * 1.0) / 255.0;
+        CGFloat alpha = (rawData[byteIndex + 3] * 1.0) / 255.0;
+        byteIndex += 4;
+
+        UIColor *acolor = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+        [result addObject:acolor];
+    }
+
+  free(rawData);
+
+  return result;
+}
+
 @end
 
