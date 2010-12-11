@@ -28,8 +28,15 @@
 	[background setY:24];
 	[self addChild:background];
     
-	BOOL blackCollisionMap[(int)[background height]][(int)[background width]];
-	BOOL whiteCollisionMap[(int)[background height]][(int)[background width]];
+//	BOOL blackCollisionMap[(int)[background height]][(int)[background width]];
+//	BOOL whiteCollisionMap[(int)[background height]][(int)[background width]];
+    
+    for(int i=0;i<768;i++) {
+        for(int j=0;j<1024;j++) {
+            blackCollisionMap[i][j]=false;
+            whiteCollisionMap[i][j]=false;
+        }
+    }
 	
 	//initialize our collision maps
 
@@ -65,28 +72,18 @@
     for(UIColor *c in a) {
         y = floor(byteIndex/width);
         x = byteIndex-(y*width);
-//        NSLog(@"%d:%d :: %f/%f/%f", x, y, [c red], [c green], [c blue]);
+        float r = [c red];
+        float g = [c green];
+        float b = [c blue];
+        
+        if(r<=0 && g <= 0 && b <= 0) {
+            blackCollisionMap[x][y] = true;
+        } else if (r>=1 && g>=1 && b >= 1) {
+            whiteCollisionMap[x][y] = true;
+        }
         byteIndex++;
     }
     NSLog(@"done");
-/*	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
-			
-			CGFloat red   = (rawData[byteIndex]     * 1.0) / 255.0;
-			CGFloat green = (rawData[byteIndex + 1] * 1.0) / 255.0;
-			CGFloat blue  = (rawData[byteIndex + 2] * 1.0) / 255.0;
-			byteIndex += 4;
-			if ((red >= 1.0) && (green >= 1.0) && (blue >= 1.0)) {
-				whiteCollisionMap[i][j] = YES;
-			} else if ((red <= 0.0) && (green <= 0.0) && (blue <= 0.0)){
-				blackCollisionMap[i][j] = YES;
-			} else {
-				whiteCollisionMap[i][j] = NO;
-				blackCollisionMap[i][j] = NO;
-			}
-		}
-	}
- */
 }
 
 

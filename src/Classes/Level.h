@@ -15,8 +15,8 @@
 	SPImage *backgroundImage;
 	
 @private
-	BOOL *blackCollisionMap[768][1024];
-	BOOL *whiteCollisionMap[768][1024];
+	BOOL blackCollisionMap[768][1024];
+	BOOL whiteCollisionMap[768][1024];
 }
 - (Level*)initWithBackground: (NSString*)backgroundPath;
 - (void)getCollisionMapsFromImage: (UIImage*)image;
