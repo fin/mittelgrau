@@ -13,6 +13,8 @@
 #import "PlayerControl.h"
 #import "UIColor-Expanded.h"
 
+@class Level;
+
 @interface Level : SPSprite {
 	SPImage *backgroundImage;
 	Player *blackplayer;
@@ -28,6 +30,8 @@
 - (Level*)initWithBackground: (NSString*)backgroundPath;
 - (void)getCollisionMapsFromImage: (UIImage*)image;
 - (BOOL)collides:(SPSprite *)s isBlack:(BOOL)b;
+
+- (void)removePlayerControl;
 
 - (PlayerControl *)getControlForEvent:(SPTouch *)e;
 - (void)setControl:(PlayerControl *)ctl forEvent:(SPTouch *)e;

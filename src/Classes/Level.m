@@ -120,23 +120,22 @@
 }
 
 - (void)onTouch:(SPTouchEvent *)event {
-	NSLog(@" touches!");
-	[blackplayer toggleOrientation];
-	[whiteplayer toggleOrientation];
 	
     NSArray *touches_started = [[event touchesWithTarget:self
-												andPhase:SPTouchPhaseBegan] allObjects];
+									   andPhase:SPTouchPhaseBegan] allObjects];
     
     NSArray *touches_moved = [[event touchesWithTarget:self
-											  andPhase:SPTouchPhaseMoved] allObjects];
+									 andPhase:SPTouchPhaseMoved] allObjects];
     
     NSArray *touches_ended = [[event touchesWithTarget:self
-											  andPhase:SPTouchPhaseEnded] allObjects];
+									 andPhase:SPTouchPhaseEnded] allObjects];
     
     for(SPTouch *t in touches_ended) {
         PlayerControl *pc = [self getControlForEvent:t];
         if(pc!=nil) {
+			NSLog(@"pc not nil!!!");
             [self removeChild:pc];
+			[pc dealloc];
             [self setControl:nil forEvent:t];
         }
     }
@@ -150,24 +149,32 @@
             [pc setY:[loc y]];
             [pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
             [self setControl:pc forEvent:t];
-        }
+		}
     }
     for(SPTouch *t in touches_moved) {
         SPPoint *prev = [t previousLocationInSpace:self];
+		SPPoint *cur = [t locationInSpace:self];
         if(prev==nil) {
             return;
         }
-        SPPoint *cur = [t locationInSpace:self];
+	
         if([self control_white] != nil && ![self eventIsBlack:t]) {
             if(([[self control_white] touchPosition]!=nil) &&
-			   [SPPoint distanceFromPoint:[[self control_white] touchPosition] toPoint:prev] == 0) {
+			   [SPPoint distanceFromPoint:cur toPoint:prev] <= 50) {
 				[[self control_white] setTouchPosition:prev];
+			} else {
+				NSLog(@"distance: %f", [SPPoint distanceFromPoint:[[self control_white] touchPosition] toPoint:prev]);
+				[self removePlayerControl: t];
 			}
+
         }
         if([self control_black] != nil && [self eventIsBlack:t]){
             if(([[self control_black] touchPosition]!=nil) &&
-			   [SPPoint distanceFromPoint:[[self control_black] touchPosition] toPoint:prev] == 0) {
+			   [SPPoint distanceFromPoint: cur toPoint:prev] <= 50) {
 				[[self control_black] setTouchPosition:prev];
+			} else {
+				NSLog(@"distance: %f", [SPPoint distanceFromPoint:[[self control_white] touchPosition] toPoint:prev]);
+				[self removePlayerControl: t];
 			}
         }
     }
@@ -178,7 +185,8 @@
 }
 
 - (PlayerControl *)getControlForEvent:(SPTouch *)e {
-    if ([self eventIsBlack:e]) {
+    NSLog(@"get control");
+	if ([self eventIsBlack:e]) {
         return control_black;
     }
     return control_white;
@@ -213,6 +221,16 @@
     return FALSE;
 }
 
+- (void)removePlayerControl:(SPTouch *)t {
+	PlayerControl *pc = [self getControlForEvent:t];
+	if(pc!=nil) {
+		NSLog([self eventIsBlack:t]?@"removing white pc":@"removing black pc");
+		[self removeChild:pc];
+		[pc dealloc];
+		[self setControl:nil forEvent:t];
+		NSLog(@"done removing");
+	}
+}
 
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
 //    [self playerCollides:whiteplayer];
