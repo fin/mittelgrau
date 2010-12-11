@@ -22,11 +22,11 @@ typedef struct {
 
 @interface Player : SPSprite {
 	SPImage *img;
-    int orientation;
+    float orientation;
     float deltaX;
     float deltaY;
     BOOL isBlack;
-	int gravity;
+	float gravity;
 }
 
 - (Player *)initWithIsBlack:(int)b;
@@ -34,10 +34,10 @@ typedef struct {
 - (Player_movement) movementForFrame:(SPEnterFrameEvent *)event;
 
 @property (nonatomic, retain) SPImage *img;
-@property (nonatomic) int orientation;
+@property  float orientation;
 @property (nonatomic) float deltaX;
 @property (nonatomic) float deltaY;
 @property (nonatomic) BOOL isBlack;
-@property (nonatomic) int gravity;
+@property (nonatomic) float gravity;
 
 @end

@@ -121,7 +121,6 @@
 }
 
 - (void)onTouch:(SPTouchEvent *)event {
-
     NSArray *touches_started = [[event touchesWithTarget:self
 									   andPhase:SPTouchPhaseBegan] allObjects];
     
@@ -256,8 +255,8 @@
 }
 
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
-    [self playerCollides:whiteplayer isBlack:FALSE inFrame:event];
     [self playerCollides:blackplayer isBlack:TRUE inFrame:event];
+    [self playerCollides:whiteplayer isBlack:FALSE inFrame:event];
 }
 
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event {
@@ -268,19 +267,27 @@
     if(m.y2 + [player height] > [self height]) {
         m.y2 = [self height] - [player height];
     }
+    if(m.x2<0) {
+        m.x2 = 0;
+    }
+    if(m.y2<0) {
+        m.y2 = 0;
+    }
 
+    NSLog(@"Y: %d + %d", m.y1, m.y2-m.y1);
     
     BOOL steep = abs(m.y2 - m.y1) > abs(m.x2 - m.x1);
     if(steep) {
-        int tmp = m.x1;
+        int tmp = m.y1;
         m.y1 = m.x1;
         m.x1 = tmp;
-        tmp = m.x2;
+        tmp = m.y2;
         m.y2 = m.x2;
         m.x2 = tmp;
     }
     int deltax = abs(m.x2 - m.x1);
     int deltay = abs(m.y2 - m.y1);
+    NSLog(@"dx/dy: %d/%d; %@", deltax, deltay, steep?@"steep":@"");
     int error = deltax / 2;
     int ystep;
     int y = m.y1;
@@ -298,14 +305,14 @@
         ystep = -1;
     }
     BOOL collision = FALSE;
-    for(int x=m.x1; x<m.x2; x+=inc) {
+    for(int x=m.x1; x!=m.x2; x+=inc) {
         if(collision)
             break;
         for(int xcorner=0;xcorner<=1;xcorner++) {
             for(int ycorner=0;ycorner<=1;ycorner++) {
                 if((b?blackCollisionMap:whiteCollisionMap)[xcorner*(int)[player width]+(steep?y:x)][ycorner*(int)[player height]+(steep?x:y)]) {
-                    NSLog(@"COLLIDE! %d, %d", xcorner, ycorner);
                     collision=TRUE;
+                    NSLog(@"collision!");
                     if(xcorner>0) {
                         [player setDeltaX:0];
                     }
@@ -324,6 +331,7 @@
         }
         [player setX:(steep?y:x)];
         [player setY:(steep?x:y)];
+        NSLog(@"set: %d", (steep?x:y));
     }
 }
 
