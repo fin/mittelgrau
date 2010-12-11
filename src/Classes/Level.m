@@ -57,7 +57,7 @@
     int width = [image size].width;
     int height = [image size].height;
     
-    NSArray *a = [self getRGBAsFromImage:image atX:1 andY:1 count:height*width];
+    NSArray *a = [self getRGBAsFromImage:image atX:0 andY:0 count:height*width];
 	int byteIndex = 0;
     int x = 0;
     int y = 0;
@@ -65,9 +65,10 @@
     for(UIColor *c in a) {
         y = floor(byteIndex/width);
         x = byteIndex-(y*width);
-        NSLog(@"%d:%d :: %f/%f/%f", x, y, [c red], [c green], [c blue]);
+//        NSLog(@"%d:%d :: %f/%f/%f", x, y, [c red], [c green], [c blue]);
         byteIndex++;
     }
+    NSLog(@"done");
 /*	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			
