@@ -28,10 +28,15 @@
 	SPImage *background = [SPImage imageWithContentsOfFile:backgroundPath];
 	[background setY:24];
 	[self addChild:background];
+	
+	[self setWhiteplayer:[[Player alloc] initWithIsBlack: 0]];
+	[self setBlackplayer:[[Player alloc] initWithIsBlack: 1]];
+	
+	[self addChild:blackplayer];
+	[self addChild:whiteplayer];
 
-//	BOOL blackCollisionMap[(int)[background height]][(int)[background width]];
-//	BOOL whiteCollisionMap[(int)[background height]][(int)[background width]];
-
+	[whiteplayer setX:100];
+	
     for(int i=0;i<768;i++) {
         for(int j=0;j<1024;j++) {
             blackCollisionMap[i][j]=false;
@@ -114,6 +119,78 @@
     free(rawData);
 }
 
+- (void)onTouch:(SPTouchEvent *)event {
+	NSLog(@" touches!");
+	
+    NSArray *touches_started = [[event touchesWithTarget:self
+												andPhase:SPTouchPhaseBegan] allObjects];
+    
+    NSArray *touches_moved = [[event touchesWithTarget:self
+											  andPhase:SPTouchPhaseMoved] allObjects];
+    
+    NSArray *touches_ended = [[event touchesWithTarget:self
+											  andPhase:SPTouchPhaseEnded] allObjects];
+    
+    for(SPTouch *t in touches_ended) {
+        PlayerControl *pc = [self getControlForEvent:t];
+        if(pc!=nil) {
+            [self removeChild:pc];
+            [self setControl:nil forEvent:t];
+        }
+    }
+    for(SPTouch *t in touches_started) {
+        PlayerControl *pc = [self getControlForEvent:t];
+        if(pc==nil) {
+            pc = [[PlayerControl alloc] initWithPlayer:[self eventIsBlack:t]?[self blackplayer]:[self whiteplayer]];
+        }
+        SPPoint *loc = [t locationInSpace:self];
+        [pc setX:[loc x]];
+        [pc setY:[loc y]];
+        [pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
+        [self setControl:pc forEvent:t];
+    }
+    for(SPTouch *t in touches_moved) {
+        SPPoint *prev = [t previousLocationInSpace:self];
+        if(prev==nil) {
+            return;
+        }
+        if([self control_white] != nil && ![self eventIsBlack:t]) {
+            if(([[self control_white] touchPosition]!=nil) &&
+			   [SPPoint distanceFromPoint:[[self control_white] touchPosition] toPoint:prev] == 0) {
+				[[self control_white] setTouchPosition:prev];
+			}
+        }
+        if([self control_black] != nil && [self eventIsBlack:t]){
+            if(([[self control_black] touchPosition]!=nil) &&
+			   [SPPoint distanceFromPoint:[[self control_black] touchPosition] toPoint:prev] == 0) {
+				[[self control_black] setTouchPosition:prev];
+			}
+        }
+    }
+}
+
+- (BOOL)eventIsBlack:(SPTouch *)e {
+    return [[e locationInSpace:self] y]<[self height]/2;
+}
+
+- (PlayerControl *)getControlForEvent:(SPTouch *)e {
+    if ([self eventIsBlack:e]) {
+        return control_black;
+    }
+    return control_white;
+}
+
+- (void)setControl:(PlayerControl *)ctl forEvent:(SPTouch *)e {
+    if(ctl!=nil) {
+        [self addChild:ctl];
+    }
+    if([self eventIsBlack:e]) {
+        [self setControl_black:ctl];
+    } else {
+        [self setControl_white:ctl];
+    }
+}
+
 - (BOOL)collides:(Player *)p isBlack:(BOOL)b {
     int x = [p x];
     int y = [p y];
@@ -131,6 +208,11 @@
     }
     return FALSE;
 }
+
+@synthesize blackplayer;
+@synthesize whiteplayer;
+@synthesize control_black;
+@synthesize control_white;
 
 @end
 

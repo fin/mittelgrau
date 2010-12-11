@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 #import <Sparrow.h>
-#import "Level.h"
 
 @interface Player : SPSprite {
 	SPImage *img;
@@ -18,11 +17,9 @@
     float deltaY;
     BOOL isBlack;
 
-@private
-    Level *level;
 }
 
-- (Player *)initWithLevel:(Level *)l andIsBlack:(int)b;
+- (Player *)initWithIsBlack:(int)b;
 
 @property (nonatomic, retain) SPImage *img;
 @property (nonatomic) int orientation;

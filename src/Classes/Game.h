@@ -14,21 +14,10 @@
 #import "StatusOverlay.h"
 
 @interface Game : SPStage {
-    Player *blackplayer;
-    Player *whiteplayer;
-    
-    PlayerControl *control_black;
-    PlayerControl *control_white;
+
 	StatusOverlay *statusOverlay;
 }
 
-- (PlayerControl *)getControlForEvent:(SPTouch *)e;
-- (void)setControl:(PlayerControl *)ctl forEvent:(SPTouch *)e;
-- (BOOL)eventIsBlack:(SPTouch *)e;
 
-@property(retain) Player *blackplayer;
-@property(retain) Player *whiteplayer;
-@property(retain) PlayerControl *control_black;
-@property(retain) PlayerControl *control_white;
 @property(retain) StatusOverlay *statusOverlay;
 @end
