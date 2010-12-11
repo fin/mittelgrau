@@ -14,7 +14,6 @@
 @interface Player ()
 
 - (void)setupSprite;
-- (Player *)initWithBW:(int)isBlack;
 
 @end
 
@@ -44,10 +43,17 @@
 {
 	[self setX: self.x + event.passedTime * deltaX];
 	[self setY: self.y + event.passedTime * deltaY];
+    
+    if ([level collides:self isBlack:isBlack]) {
+        [self setDeltaX:0];
+        [self setDeltaY:0];
+    }
 }
 
-- (Player *)initWithBW:(int)isBlack {
+- (Player *)initWithLevel:(Level *)l andIsBlack:(int)b {
     [self init];
+    level = l;
+    [self setIsBlack:b];
     [self setImg:[SPImage imageWithContentsOfFile:(isBlack?@"player_facing_right_b.png":@"player_facing_right_w.png")]];
     [self addChild:[self img]];
     return self;
@@ -57,6 +63,7 @@
 @synthesize orientation;
 @synthesize deltaX;
 @synthesize deltaY;
+@synthesize isBlack;
 
 
 @end

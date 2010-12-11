@@ -113,5 +113,25 @@
     free(rawData);
 }
 
+- (BOOL)collides:(Player *)p isBlack:(BOOL)b {
+    int x = [p x];
+    int y = [p y];
+    int width = [p width];
+    int height = [p height];
+    
+    NSLog(@"collide: %d %d / %d %d", x, y, width, height);
+    
+    
+    
+    for(int i=0;i<width;i++) {
+        for(int j=0;j<height;j++) {
+            if((b?blackCollisionMap:whiteCollisionMap)[x+i][y+j]) {
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
+}
+
 @end
 

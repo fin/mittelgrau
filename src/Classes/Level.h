@@ -20,5 +20,6 @@
 }
 - (Level*)initWithBackground: (NSString*)backgroundPath;
 - (void)getCollisionMapsFromImage: (UIImage*)image;
+- (BOOL)collides:(SPSprite *)s isBlack:(BOOL)b;
 
 @end

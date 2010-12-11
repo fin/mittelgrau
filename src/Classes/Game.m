@@ -17,8 +17,8 @@
 		Level *level = [[Level alloc] initWithBackground:@"level_0.png"];
 		[self addChild:level];
         
-        [self setWhiteplayer:[[Player alloc] initWithBW:0]];
-        [self setBlackplayer:[[Player alloc] initWithBW:1]];
+        [self setWhiteplayer:[[Player alloc] initWithLevel:level andIsBlack:0]];
+        [self setBlackplayer:[[Player alloc] initWithLevel:level andIsBlack:1]];
         
         [self addChild:blackplayer];
         [self addChild:whiteplayer];
