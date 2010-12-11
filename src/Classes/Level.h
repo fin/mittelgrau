@@ -20,6 +20,5 @@
 }
 - (Level*)initWithBackground: (NSString*)backgroundPath;
 - (void)getCollisionMapsFromImage: (UIImage*)image;
-- (NSArray*)getRGBAsFromImage:(UIImage*)image atX:(int)xx andY:(int)yy count:(int)count;
 
 @end
