@@ -121,6 +121,8 @@
 
 - (void)onTouch:(SPTouchEvent *)event {
 	NSLog(@" touches!");
+	[blackplayer toggleOrientation];
+	[whiteplayer toggleOrientation];
 	
     NSArray *touches_started = [[event touchesWithTarget:self
 												andPhase:SPTouchPhaseBegan] allObjects];
@@ -155,6 +157,7 @@
         if(prev==nil) {
             return;
         }
+        SPPoint *cur = [t locationInSpace:self];
         if([self control_white] != nil && ![self eventIsBlack:t]) {
             if(([[self control_white] touchPosition]!=nil) &&
 			   [SPPoint distanceFromPoint:[[self control_white] touchPosition] toPoint:prev] == 0) {
