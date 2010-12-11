@@ -22,8 +22,7 @@
 
 @implementation Level
 -(Level*) initWithBackground: (NSString*) backgroundPath {
-	self = [self init];
-	
+	self = [self init];	
 	//set background and add to display tree
 	SPImage *background = [SPImage imageWithContentsOfFile:backgroundPath];
 	[background setY:24];
@@ -44,10 +43,12 @@
         }
     }
 	
-	//initialize our collision maps
-
 	UIImage *backdrop = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"level_0" ofType:@"png"]];
 	[self getCollisionMapsFromImage:backdrop];
+    
+    
+    [self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
+
 	return self;
 }
 
@@ -120,7 +121,7 @@
 }
 
 - (void)onTouch:(SPTouchEvent *)event {
-	
+/*
     NSArray *touches_started = [[event touchesWithTarget:self
 									   andPhase:SPTouchPhaseBegan] allObjects];
     
@@ -178,6 +179,7 @@
 			}
         }
     }
+ */
 }
 
 - (BOOL)eventIsBlack:(SPTouch *)e {
@@ -232,44 +234,76 @@
 }
 
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
+    NSLog(@"FRAME!");
     [self playerCollides:whiteplayer isBlack:FALSE inFrame:event];
     [self playerCollides:blackplayer isBlack:TRUE inFrame:event];
 }
 
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event {
     Player_movement m = [player movementForFrame:event];
-    
-    BOOL x_plus = m.x2>m.x1;
-    BOOL y_plus = m.y2>m.y1;
-    
-    int horizontal = y_plus?m.y2:m.y2+[player height];
-    int vertical = x_plus?m.x2:m.x2+[player width];
+    if(m.x2 + [player width] > [self width]) {
+        m.x2 = [self width] - [player width];
+    }
+    if(m.y2 + [player height] > [self height]) {
+        m.y2 = [self height] - [player height];
+    }
 
-    BOOL collide=true;
-    while(collide) {
-        collide=false;
-        for(int j=0;j<[player height]-2; j++) { // x axis
-            if((b?blackCollisionMap:whiteCollisionMap)[vertical+j][horizontal]) {
-                collide=true;
-                horizontal+=(x_plus)?1:-1;
-                break;
+    
+    BOOL steep = abs(m.y2 - m.y1) > abs(m.x2 - m.x1);
+    if(steep) {
+        int tmp = m.x1;
+        m.y1 = m.x1;
+        m.x1 = tmp;
+        tmp = m.x2;
+        m.y2 = m.x2;
+        m.x2 = tmp;
+    }
+    int deltax = abs(m.x2 - m.x1);
+    int deltay = abs(m.y2 - m.y1);
+    int error = deltax / 2;
+    int ystep;
+    int y = m.y1;
+  
+    int inc;
+    if(m.x1 < m.x2){
+        inc = 1;
+    } else {
+        inc = -1;
+    }
+ 
+    if(m.y1 < m.y2) {
+        ystep = 1;
+    } else {
+        ystep = -1;
+    }
+    BOOL collision = FALSE;
+    for(int x=m.x1; x<m.x2; x+=inc) {
+        if(collision)
+            break;
+        for(int xcorner=0;xcorner<=1;xcorner++) {
+            for(int ycorner=0;ycorner<=1;ycorner++) {
+                if((b?blackCollisionMap:whiteCollisionMap)[xcorner*(int)[player width]+(steep?y:x)][ycorner*(int)[player height]+(steep?x:y)]) {
+                    NSLog(@"COLLIDE! %d, %d", xcorner, ycorner);
+                    collision=TRUE;
+                    if(xcorner>0) {
+                        [player setDeltaX:0];
+                    }
+                    if(ycorner>0) {
+                        [player setDeltaY:0];
+                    }
+                    break;
+                }
             }
         }
-    }
-    collide=true;
-    while(collide) {
-        for(int j=0;j<[player width]; j++) { // x axis
-            if((b?blackCollisionMap:whiteCollisionMap)[vertical][horizontal+j]) {
-                collide=true;
-                vertical+=(y_plus)?1:-1;
-                break;
-            }
+        // REM increment here a variable to control the progress of the line drawing
+        error = error - deltay;
+        if(error < 0) {
+            y = y + ystep;
+            error = error + deltax;
         }
+        [player setX:(steep?y:x)];
+        [player setY:(steep?x:y)];
     }
-    horizontal-=y_plus?0:[player height];
-    vertical-=x_plus?0:[player width];
-    [player setX:vertical];
-    [player setY:horizontal];
 }
 
 @synthesize blackplayer;

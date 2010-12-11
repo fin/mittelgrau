@@ -25,13 +25,12 @@
     if (self = [super init]) {
         [self setupSprite];        
     }
-	[self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
 	
     [self setDeltaX:10];
 	[self setY:100];
 	[self setGravity: 100];
     
-	[self setOrientation:1];
+	[self setOrientation:[self isBlack]?-1:1];
 	
     return self;
 }
@@ -45,11 +44,12 @@
 
 - (Player_movement) movementForFrame:(SPEnterFrameEvent *)event {
     Player_movement m;
-    m.x1 = [self x];
-    m.x2 = self.x + event.passedTime * deltaX;
-    m.y1 = [self y];
-    m.y2 = self.y + event.passedTime * deltaY + event.passedTime * self.gravity * orientation;
     
+    m.x1 = (int) [self x];
+    m.x2 = (self.x + ceil(event.passedTime * deltaX));
+    m.y1 = (int) [self y];
+    m.y2 = (self.y + ceil(event.passedTime * self.gravity * orientation));
+        
     return m;
 }
 
