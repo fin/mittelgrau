@@ -13,11 +13,15 @@
 @interface PlayerControl : SPSprite {
 	Player *player;
     SPPoint *touchPosition;
+	
+@private
+	SPImage *posimg;
 }
 
 - (id) initWithPlayer:(Player*) p;
 
 @property(retain) SPPoint *touchPosition;
 @property(retain) Player *player;
+@property(retain) SPImage *posimg;
 
 @end

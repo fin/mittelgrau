@@ -26,10 +26,16 @@
         [self setupSprite];        
     }
     [self setPlayer:p];
+	
     SPImage *img = [SPImage imageWithContentsOfFile:@"controller.png"];
     [self addChild:img];
     [img setX:0-[self width]/2];
     [img setY:0-[self height]/2];
+	
+	[self setPosimg:[SPImage imageWithContentsOfFile:@"controller-position.png"]];
+	[posimg setX:0-[posimg width]/2];
+    [posimg setY:0-[posimg height]/2];
+	[self addChild:posimg];
     
     return self;
 }
@@ -48,7 +54,7 @@
     touchPosition = p;
     
     SPPoint *p1 = [SPPoint pointWithX:[self x] y:[self y]];
-    
+    [self.posimg setX:[p x]-[self x]-[posimg width]/2];
     [player setDeltaX:([p x] - [p1 x])];
 }
 
@@ -57,6 +63,7 @@
 }
 
 @synthesize player;
+@synthesize posimg;
 
 @end
 
