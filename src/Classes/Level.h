@@ -34,7 +34,7 @@
 - (void)removePlayerControl:(SPTouch *)t;
 
 - (PlayerControl *)getControlForEvent:(SPTouch *)e;
-- (void)setControl:(PlayerControl *)ctl isBlack:(BOOL)b;
+- (void)setControl:(PlayerControl *)ctl;
 - (BOOL)eventIsBlack:(SPTouch *)e;
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event;
 - (void)onEnterFrame:(SPEnterFrameEvent *)event;
