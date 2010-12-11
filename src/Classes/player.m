@@ -48,8 +48,8 @@
     m.x1 = (int) [self x];
     m.x2 = (self.x + ceil(event.passedTime * deltaX));
     m.y1 = (int) [self y];
-    m.y2 = (self.y + ceil(event.passedTime * self.gravity * orientation));
-        
+    m.y2 = (self.y + event.passedTime * self.gravity * orientation);
+    
     return m;
 }
 

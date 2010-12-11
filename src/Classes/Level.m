@@ -121,7 +121,6 @@
 }
 
 - (void)onTouch:(SPTouchEvent *)event {
-/*
     NSArray *touches_started = [[event touchesWithTarget:self
 									   andPhase:SPTouchPhaseBegan] allObjects];
     
@@ -185,7 +184,6 @@
 			}
         }
     }
- */
 }
 
 - (BOOL)eventIsBlack:(SPTouch *)e {
@@ -251,9 +249,8 @@
 }
 
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
-    NSLog(@"FRAME!");
+    //[self playerCollides:blackplayer isBlack:TRUE inFrame:event];
     [self playerCollides:whiteplayer isBlack:FALSE inFrame:event];
-    [self playerCollides:blackplayer isBlack:TRUE inFrame:event];
 }
 
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event {
@@ -263,6 +260,12 @@
     }
     if(m.y2 + [player height] > [self height]) {
         m.y2 = [self height] - [player height];
+    }
+    if(m.x2<0) {
+        m.x2 = 0;
+    }
+    if(m.y2<0) {
+        m.y2 = 0;
     }
 
     
@@ -300,12 +303,13 @@
         for(int xcorner=0;xcorner<=1;xcorner++) {
             for(int ycorner=0;ycorner<=1;ycorner++) {
                 if((b?blackCollisionMap:whiteCollisionMap)[xcorner*(int)[player width]+(steep?y:x)][ycorner*(int)[player height]+(steep?x:y)]) {
-                    NSLog(@"COLLIDE! %d, %d", xcorner, ycorner);
                     collision=TRUE;
                     if(xcorner>0) {
+                        NSLog(@"deltax=0");
                         [player setDeltaX:0];
                     }
                     if(ycorner>0) {
+                        NSLog(@"deltay=0");
                         [player setDeltaY:0];
                     }
                     break;
