@@ -46,14 +46,10 @@
     NSLog(@"lol!");
 
     touchPosition = p;
-        
-    NSLog(@"dbg: w:%d x:%f y:%f tx:%f ty:%f", [self width], [self x], [self y], [p x], [p y]);
     
     SPPoint *p1 = [SPPoint pointWithX:[self x] y:[self y]];
     
     [player setDeltaX:([p x] - [p1 x])];
-    
-    NSLog(@"lol? %f", [player deltaX]);
 }
 
 - (SPPoint *)touchPosition {
