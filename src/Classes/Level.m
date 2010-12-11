@@ -176,13 +176,13 @@
         }
         if([self control_black] != nil && [self eventIsBlack:t]){
 			NSLog(@"nillll!!!");
+			NSLog(@"distance would be: %f",  [SPPoint distanceFromPoint:cur toPoint:prev]);
+			NSLog(@"touch position: %f", [[self control_black] touchPosition]);
             if(([[self control_black] touchPosition]!=nil) &&
-			   [SPPoint distanceFromPoint: cur toPoint:prev] <= 50) {
-				NSLog(@"current: %f : %f", [cur x], [cur y]);
-				NSLog(@"prev: %f : %f", [prev x], [prev y]);
+			   [SPPoint distanceFromPoint:cur toPoint:prev] <= 50) {
 				[[self control_black] setTouchPosition:prev];
 			} else {
-				NSLog(@"distance: %f", [SPPoint distanceFromPoint:[[self control_white] touchPosition] toPoint:prev]);
+				NSLog(@"distance: %f", [SPPoint distanceFromPoint:[[self control_black] touchPosition] toPoint:prev]);
 				[self removePlayerControl: t];
 			}
         }
