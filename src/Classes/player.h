@@ -27,10 +27,15 @@ typedef struct {
     float deltaY;
     BOOL isBlack;
 	float gravity;
+@private
+	SPTexture *facingRight;
+	SPTexture *facingLeft;
+	SPTexture *facingFront;
 }
 
 - (Player *)initWithIsBlack:(int)b;
 - (void) toggleOrientation;
+- (void) updateOrientation;
 - (Player_movement) movementForFrame:(SPEnterFrameEvent *)event;
 
 @property (nonatomic, retain) SPImage *img;
@@ -39,5 +44,8 @@ typedef struct {
 @property (nonatomic) float deltaY;
 @property (nonatomic) BOOL isBlack;
 @property (nonatomic) float gravity;
+@property (retain) SPTexture *facingRight;
+@property (retain) SPTexture *facingLeft;
+@property (retain) SPTexture *facingFront;
 
 @end
