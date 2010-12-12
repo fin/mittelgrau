@@ -322,13 +322,13 @@
     for(Item *i in items) {
         SPPoint *p = [SPPoint pointWithX:[i x] y:[i y]];
         if([[[self blackplayer] bounds] containsPoint:p]) {
-            NSLog(@"blackplayer collected item");
+            [[SPSound soundWithContentsOfFile:@"bling_a.aif"] play];
             [backdrop removeChild:i];
             [toRemove addObject:i];
             continue; // prevent whiteplayer from getting it. unlikely, but possible.
         }
         if([[[self whiteplayer] bounds] containsPoint:p]) {
-            NSLog(@"whiteplayer collected item");
+            [[SPSound soundWithContentsOfFile:@"bling_a.aif"] play];
             [backdrop removeChild:i];
             [toRemove addObject:i];
         }
@@ -364,14 +364,12 @@
     int x;
     for(x=m.x1;x!=m.x2;x+=xinc) {
         if ([self pointCollidesX:x+(xinc>0?pwidth:0) andY:y+(yinc>0?pheight:0)-yinc isBlack:b]) {
-//            NSLog(@"%@:x collides at %d/%d", b?@"black":@"white", x,y);
             break;
         }
         [player setX:x];
     }
     for(y=m.y1;y!=m.y2;y+=yinc) {
         if ([self pointCollidesX:x+(xinc>0?pwidth:0)-xinc andY:y+(yinc>0?pheight:0) isBlack:b]) {
-//            NSLog(@"%@:y collides at %d/%d", b?@"black":@"white", x,y);
             break;
         }
         [player setY:y];

@@ -17,7 +17,7 @@
         levelno = 0;
         levels = [[NSMutableArray alloc] init];
         [levels retain];
-        
+
         [levels addObject:@"level_0.png"];
         [levels addObject:@"level_1.png"];
 		[levels addObject:@"level_2.png"];
@@ -26,18 +26,19 @@
         [self advanceLevel:nil];
         
         SPSound *sound = [SPSound soundWithContentsOfFile:@"background.mp3"];
-        SPSoundChannel *channel = [sound createChannel];
+        channel = [sound createChannel];
         channel.volume = 0.6f;
-         
+        channel.loop = YES;
+        
         [channel play];
-        [channel loop];
-        [channel retain];
 	}
     return self;
 }
 
 - (void)advanceLevel:(SPEvent *)event {
     NSLog(@"advance level: %d", levelno);
+    if(levelno>=[levels count])
+        return;
     if(current_level!=nil) {
         [self removeChild:current_level];
         [self removeEventListener:@selector(onTouch:) atObject:current_level
@@ -71,6 +72,7 @@
 - (void) dealloc {
     NSLog(@"dealloc: level");
     [levels release];
+    [channel release];
     [super dealloc];
 }
 
