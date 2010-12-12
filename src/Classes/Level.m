@@ -181,21 +181,22 @@
 
 - (BOOL)eventIsBlack:(SPTouch *)e {
 	if ([[e locationInSpace:self] y] >= [backgroundImage height]/2) {
-		NSLog(@"event is black");
+/*		NSLog(@"event is black");
 		NSLog(@"height: %f", [backgroundImage height]);
 		NSLog(@"y is %f", [[e locationInSpace:self] y]);
-		
+*/
 		return YES;
 	} else {
-		NSLog(@"event is white");
+/*		NSLog(@"event is white");
 		NSLog(@"height: %f", [backgroundImage height]);
 		NSLog(@"y is %f", [[e locationInSpace:self] y]);
+ */
 		return NO;
 	}
 }
 
 - (PlayerControl *)getControlForEvent:(SPTouch *)e {
-    NSLog(@"get control");
+//    NSLog(@"get control");
 	if ([self eventIsBlack:e]) {
         return control_black;
     }
@@ -300,7 +301,6 @@
             for(int ycorner=0;ycorner<=1;ycorner++) {
                 if((b?blackCollisionMap:whiteCollisionMap)[xcorner*(int)[player width]+(steep?y:x)][ycorner*(int)[player height]+(steep?x:y)]) {
                     collision=TRUE;
-                    NSLog(@"collision!");
                     if(xcorner>0) {
                         [player setDeltaX:0];
                     }

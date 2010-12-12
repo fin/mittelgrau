@@ -50,8 +50,6 @@
     m.y1 = (int) [self y];
     m.y2 = ([self y] + (int)(event.passedTime * self.gravity * orientation));
     
-  //  NSLog(@"diff: %d; (%f|%f|%f) %d", m.y2 - m.y1, event.passedTime, self.gravity, orientation, (int)(event.passedTime * self.gravity * orientation));
-    
     return m;
 }
 
