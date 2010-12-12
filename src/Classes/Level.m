@@ -297,10 +297,6 @@
         if(collision)
             break;
         
-                    // (steep?y:x)][(steep?x:y)
-                    // xcorner*(int)[player width]+
-                    // ycorner*(int)[player height]+
-        
         BOOL cl, cr, ct, cb;
         cl = [self pointCollidesX:(steep?y:x) andY:(steep?x:y)+[player height]/2 isBlack:b];
         cr = [self pointCollidesX:(steep?y:x)+[player width] andY:(steep?x:y)+[player height]/2 isBlack:b];
@@ -320,7 +316,14 @@
             if(cb && steep && deltax<0) {
                 [player setDeltaY:0];
             }
-            continue;
+            
+            if (x==m.x1 && (cl||cr) && (ct || cb)) { // escape lock. does not actually work O.o
+                x-=inc;
+                y-=ystep;
+            } else {
+                break;
+            }
+
         }
         
         // REM increment here a variable to control the progress of the line drawing
