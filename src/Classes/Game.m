@@ -28,6 +28,7 @@
 
 - (void) dealloc {
     NSLog(@"dealloc: level");
+    [super dealloc];
 }
 
 

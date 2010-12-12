@@ -318,7 +318,7 @@
         if([[[self whiteplayer] bounds] containsPoint:p]) {
             NSLog(@"whiteplayer collected item");
             [backdrop removeChild:i];
-            [items addObject:i];
+            [toRemove addObject:i];
         }
     }
     for(Item *i in toRemove) {
