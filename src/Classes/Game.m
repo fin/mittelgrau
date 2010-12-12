@@ -26,10 +26,10 @@
         
         SPSound *sound = [SPSound soundWithContentsOfFile:@"background.mp3"];
         channel = [sound createChannel];
-        channel.volume = 0.6f;
-        channel.loop = YES;
-        
+        channel.volume = 0.9;        
+        [channel setLoop:YES];
         [channel play];
+        [channel retain];
 	}
     return self;
 }
