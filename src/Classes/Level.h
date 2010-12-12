@@ -42,13 +42,14 @@
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event;
 - (void)onEnterFrame:(SPEnterFrameEvent *)event;
 - (BOOL)pointCollidesX:(int)x andY:(int)y isBlack:(BOOL)b;
+- (SPPoint *)previousLocationInSpace:(SPTouch *)e;
+- (SPPoint *)locationInSpace:(SPTouch *)e;
 
 
 @property(retain) Player *blackplayer;
 @property(retain) Player *whiteplayer;
 @property(retain) PlayerControl *control_black;
 @property(retain) PlayerControl *control_white;
-//@property(retain) SPImage *backgroundImage;
 @property(retain) SPSprite *backdrop;
 @property(retain) StatusOverlay *statusOverlay;
 

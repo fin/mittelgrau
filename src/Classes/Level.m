@@ -162,7 +162,7 @@
     int i = 0;
     for(SPTouch *t in touches_ended) {
 		i++;
-		SPPoint *cur = [t locationInSpace:self];
+		SPPoint *cur = [self locationInSpace:t];
 		if ([self getControlForEvent:t] != nil)  {
 			if ([[self getControlForEvent:t] distanceToTouchPosition: cur] < 100) {
 				[self removePlayerControl: t];
@@ -177,7 +177,7 @@
 	}
     for(SPTouch *t in touches_started) {
         PlayerControl *pc = [self getControlForEvent:t];
-		SPPoint *cur = [t locationInSpace:self];
+		SPPoint *cur = [self locationInSpace:t]; //  [t locationInSpace:self];
 		if ([statusOverlay checkToggleArea: cur])
 		{
 			[whiteplayer toggleOrientation];
@@ -197,7 +197,7 @@
 					[self setControl:pc];
 				}
 				
-				SPPoint *loc = [t locationInSpace:self]; 
+				SPPoint *loc = [self locationInSpace:t]; 
 				[pc setX:[loc x]];
 				[pc setY:[loc y]];
 				[pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
@@ -212,8 +212,8 @@
 	i = 0;
     for(SPTouch *t in touches_moved) {
 		i++;
-        SPPoint *prev = [t previousLocationInSpace:self];
-		SPPoint *cur = [t locationInSpace:self];
+        SPPoint *prev = [self previousLocationInSpace:t];
+		SPPoint *cur = [self locationInSpace:t];
         if(prev==nil) {
 			if ([self getControlForEvent:t] != nil) {
 				[[self getControlForEvent:t] setTouchPosition:cur];
@@ -246,8 +246,22 @@
     }
 }
 
+- (SPPoint *)locationInSpace:(SPTouch *)t {
+    int y = [t globalY]-24;
+    if(y<0)
+        y=0;
+    return [SPPoint pointWithX:[t globalX] y:y];
+}
+
+- (SPPoint *)previousLocationInSpace:(SPTouch *)t {
+    int y = [t previousGlobalY]-24;
+    if(y<0)
+        y=0;
+    return [SPPoint pointWithX:[t previousGlobalX] y:y];
+}
+
 - (BOOL)eventIsBlack:(SPTouch *)e {
-	if ([[e locationInSpace:self] y] >= [backgroundImage height]/2) {
+	if ([[self locationInSpace:e] y] >= [backgroundImage height]/2) {
 		return YES;
 	} else {
 		return NO;
