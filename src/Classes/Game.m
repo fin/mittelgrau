@@ -18,32 +18,44 @@
         levels = [[NSMutableArray alloc] init];
         [levels retain];
         
-        [levels addObject:[[Level alloc] initWithBackground:@"level_0.png"]];
-        [levels addObject:[[Level alloc] initWithBackground:@"level_1.png"]];
+        [levels addObject:@"level_0.png"];
+        [levels addObject:@"level_1.png"];
 		
         [self advanceLevel:nil];
-        
 	}
     return self;
 }
 
 - (void)advanceLevel:(SPEvent *)event {
-    if(levelno>0) {
-        Level *level = [levels objectAtIndex:levelno-1];
-        [self removeChild:level];
-        [self removeEventListener:@selector(onTouch:) atObject:level
+    NSLog(@"advance level: %d", levelno);
+    if(current_level!=nil) {
+        [self removeChild:current_level];
+        [self removeEventListener:@selector(onTouch:) atObject:current_level
                    forType:SP_EVENT_TYPE_TOUCH];
     }
-    if(levelno>=[levels count]) {
-        NSLog(@"it's over!");
-        return;
+
+    current_level = [[Level alloc] initWithBackground:[levels objectAtIndex:levelno]];
+    
+    [self addChild:current_level];
+    
+    if(levelno+1==[levels count]) {
+        NSLog(@"upcoming: last level");
+        [self addEventListener:@selector(clickOnLastLevel:) atObject:self
+                   forType:SP_EVENT_TYPE_TOUCH];
     }
-    Level *level = [levels objectAtIndex:levelno];
-    [self addChild:level];
-    [self addEventListener:@selector(onTouch:) atObject:level
+    [self addEventListener:@selector(onTouch:) atObject:current_level
                forType:SP_EVENT_TYPE_TOUCH];
-    [level addEventListener:@selector(advanceLevel:) atObject:self forType:@"LEVEL_DONE"];
+    [current_level addEventListener:@selector(advanceLevel:) atObject:self forType:@"LEVEL_DONE"];
     levelno++;
+}
+
+- (void)clickOnLastLevel:(SPEvent *)event {
+    NSLog(@"click on last level");
+    [self removeEventListener:@selector(clickOnLastLevel:) atObject:self
+                   forType:SP_EVENT_TYPE_TOUCH];
+    levelno=0;
+    [self advanceLevel:nil];
+    return;
 }
 
 - (void) dealloc {

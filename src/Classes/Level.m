@@ -38,6 +38,9 @@
 	[self setWhiteplayer:[[Player alloc] initWithIsBlack: 0]];
 	[self setBlackplayer:[[Player alloc] initWithIsBlack: 1]];
     
+    [[self blackplayer] setX:376];
+    [[self whiteplayer] setX:376];
+    
     SPSprite *player_container = [[SPSprite alloc] init];
     
 	[player_container addChild:blackplayer];
@@ -50,9 +53,7 @@
     [player_container setY:24];
     
     [self addChild:player_container];
-    
-	[whiteplayer setX:100];
-	
+    	
     
     items = [[NSMutableArray alloc] init];
     
