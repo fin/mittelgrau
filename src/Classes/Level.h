@@ -16,6 +16,7 @@
 @class Level;
 
 @interface Level : SPSprite {
+    SPSprite *backdrop;
 	SPImage *backgroundImage;
 	Player *blackplayer;
     Player *whiteplayer;
@@ -47,7 +48,8 @@
 @property(retain) Player *whiteplayer;
 @property(retain) PlayerControl *control_black;
 @property(retain) PlayerControl *control_white;
-@property(retain) SPImage *backgroundImage;
+//@property(retain) SPImage *backgroundImage;
+@property(retain) SPSprite *backdrop;
 @property(retain) StatusOverlay *statusOverlay;
 
 @end

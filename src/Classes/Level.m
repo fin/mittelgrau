@@ -8,7 +8,7 @@
 
 #import "Level.h"
 #import "Player.h"
-
+#import "Item.h"
 
 // --- private interface ---------------------------------------------------------------------------
 
@@ -23,10 +23,17 @@
 @implementation Level
 -(Level*) initWithBackground: (NSString*) backgroundPath {
 	self = [self init];	
+    
+    [self setBackdrop:[[SPSprite alloc] init]];
+    [[self backdrop] setX:0];
+    [[self backdrop] setY:24];
+	[self addChild:backdrop];
+    
 	//set background and add to display tree
-	[self setBackgroundImage:[SPImage imageWithContentsOfFile:backgroundPath]];
-	[backgroundImage setY:24];
-	[self addChild:backgroundImage];
+    backgroundImage = [SPImage imageWithContentsOfFile:backgroundPath];
+	[backgroundImage setY:0];
+    [backgroundImage retain];
+	[[self backdrop] addChild:backgroundImage];
 	
 	[self setWhiteplayer:[[Player alloc] initWithIsBlack: 0]];
 	[self setBlackplayer:[[Player alloc] initWithIsBlack: 1]];
@@ -58,9 +65,8 @@
         }
     }
 	
-	UIImage *backdrop = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"level_0" ofType:@"png"]];
-	[self getCollisionMapsFromImage:backdrop];
-    
+	UIImage *imgdata = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"level_0" ofType:@"png"]];
+	[self getCollisionMapsFromImage:imgdata];
     
     [self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
 
@@ -129,7 +135,9 @@
         }
         else if(r<=0 && g>=1 && b <=0) {
             NSLog(@"found item at %d/%d", x, y);
-            SPSprite *item = [[SPSprite alloc] init];
+            Item *i = [[Item alloc] initWithX:x andY:y];
+            [[self backdrop] addChild:i];
+            [items addObject:i];
         }
         x++;
         if(x>=width) {
@@ -290,7 +298,7 @@
 		} else {
 			[self setControl_white:nil];
 		}
-		[pc release];
+		[pc release]; //it's a bloody prototype
 	}
 	
 }
@@ -298,6 +306,27 @@
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
     [self playerCollides:blackplayer isBlack:TRUE inFrame:event];
     [self playerCollides:whiteplayer isBlack:FALSE inFrame:event];
+    NSMutableArray *toRemove = [[NSMutableArray alloc] init];
+    for(Item *i in items) {
+        SPPoint *p = [SPPoint pointWithX:[i x] y:[i y]];
+        if([[[self blackplayer] bounds] containsPoint:p]) {
+            NSLog(@"blackplayer collected item");
+            [backdrop removeChild:i];
+            [toRemove addObject:i];
+            continue; // prevent whiteplayer from getting it. unlikely, but possible.
+        }
+        if([[[self whiteplayer] bounds] containsPoint:p]) {
+            NSLog(@"whiteplayer collected item");
+            [backdrop removeChild:i];
+            [items addObject:i];
+        }
+    }
+    for(Item *i in toRemove) {
+        [items removeObject:i];
+    }
+    if([items count] == 0) {
+        NSLog(@"woohooo!");
+    }
 }
 
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event {
@@ -345,7 +374,7 @@
 @synthesize whiteplayer;
 @synthesize control_black;
 @synthesize control_white;
-@synthesize backgroundImage;
+@synthesize backdrop;
 @synthesize statusOverlay;
 
 @end

@@ -21,17 +21,25 @@
 
 @implementation Item
 
-- (id)init {
+- (id)initWithX:(int)x andY:(int)y {
     if (self = [super init]) {
-        [self setupSprite];        
+        [self setupSprite];
+        [self setX:x];
+        [self setY:y];
     }
     return self;
 }
 
 - (void)setupSprite {
+    img = [SPImage imageWithContentsOfFile:@"item.png"];
+    img.x = (img.width/2)*-1;
+    img.y = (img.height/2)*-1;
+    [self addChild:img];
+    [img retain];
 }
 
 - (void)dealloc {
+    [img release];
     [super dealloc];
 }
 

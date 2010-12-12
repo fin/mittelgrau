@@ -10,7 +10,11 @@
 #import <Sparrow.h>
 
 @interface Item : SPSprite {
-	
+
+@private
+    SPImage *img;
 }
+
+- (Item *)initWithX:(int)x andY:(int)y;
 
 @end
