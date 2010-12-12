@@ -30,12 +30,25 @@
 	
 	[self setWhiteplayer:[[Player alloc] initWithIsBlack: 0]];
 	[self setBlackplayer:[[Player alloc] initWithIsBlack: 1]];
+    
+    SPSprite *player_container = [[SPSprite alloc] init];
+    
+    [player_container retain];
 	
-	[self addChild:blackplayer];
-	[self addChild:whiteplayer];
-
+	[player_container addChild:blackplayer];
+	[player_container addChild:whiteplayer];
+/*
+    [player_container setWidth:[backgroundImage width]];
+    [player_container setHeight:[backgroundImage height]];
+*/    
+    [player_container setX:0];
+    [player_container setY:24];
+    
+    [self addChild:player_container];
+    
 	[whiteplayer setX:100];
 	
+    
     for(int i=0;i<768;i++) {
         for(int j=0;j<1024;j++) {
             blackCollisionMap[i][j]=false;
@@ -269,11 +282,13 @@
 
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event {
     Player_movement m = [player movementForFrame:event];
-    if(m.x2 + [player width] > [self width]) {
-        m.x2 = [self width] - [player width];
+    int pwidth = [player width];
+    int pheight = [player height];
+    if(m.x2 + [player width] > [backgroundImage width]) {
+        m.x2 = [backgroundImage width] - [player width];
     }
-    if(m.y2 + [player height] > [self height]) {
-        m.y2 = [self height] - [player height];
+    if(m.y2 + [player height] > [backgroundImage height]) {
+        m.y2 = [backgroundImage height] - [player height];
     }
     if(m.x2<0) {
         m.x2 = 0;
@@ -281,75 +296,23 @@
     if(m.y2<0) {
         m.y2 = 0;
     }
-
-    
-    BOOL steep = abs(m.y2 - m.y1) > abs(m.x2 - m.x1);
-    if(steep) {
-        int tmp = m.y1;
-        m.y1 = m.x1;
-        m.x1 = tmp;
-        tmp = m.y2;
-        m.y2 = m.x2;
-        m.x2 = tmp;
-    }
-    int deltax = abs(m.x2 - m.x1);
-    int deltay = abs(m.y2 - m.y1);
-    int error = deltax / 2;
-    int ystep;
     int y = m.y1;
-  
-    int inc;
-    if(m.x1 < m.x2){
-        inc = 1;
-    } else {
-        inc = -1;
-    }
- 
-    if(m.y1 < m.y2) {
-        ystep = 1;
-    } else {
-        ystep = -1;
-    }
-    BOOL collision = FALSE;
-    for(int x=m.x1; x!=m.x2; x+=inc) {
-        if(collision)
+    int xinc = abs(m.x2-m.x1)==0?0:(m.x2-m.x1)/abs(m.x2-m.x1);
+    int yinc = abs(m.y2-m.y1)==0?0:(m.y2-m.y1)/abs(m.y2-m.y1);
+    int x;
+    for(x=m.x1;x!=m.x2;x+=xinc) {
+        if ([self pointCollidesX:x+(xinc>0?pwidth:0) andY:y+(yinc>0?pheight:0) isBlack:b]) {
+            NSLog(@"%@:x collides at %d/%d", b?@"black":@"white", x,y);
             break;
-        
-                    // (steep?y:x)][(steep?x:y)
-                    // xcorner*(int)[player width]+
-                    // ycorner*(int)[player height]+
-        
-        BOOL cl, cr, ct, cb;
-        cl = [self pointCollidesX:(steep?y:x) andY:(steep?x:y)+[player height]/2 isBlack:b];
-        cr = [self pointCollidesX:(steep?y:x)+[player width] andY:(steep?x:y)+[player height]/2 isBlack:b];
-        ct = [self pointCollidesX:(steep?y:x)+[player width]/2 andY:(steep?x:y) isBlack:b];
-        cb = [self pointCollidesX:(steep?y:x)+[player width]/2 andY:(steep?x:y)+[player height] isBlack:b];
-        if(cl || cr || ct || cb) {
-            collision = true;
-            if(cr && !steep && deltax>0) {
-                [player setDeltaX:0];
-            }
-            if(cl && !steep && deltax<0) {
-                [player setDeltaX:0];
-            }
-            if(ct && steep && deltax>0) {
-                [player setDeltaY:0];
-            }
-            if(cb && steep && deltax<0) {
-                [player setDeltaY:0];
-            }
-            continue;
         }
-        
-        // REM increment here a variable to control the progress of the line drawing
-        error = error - deltay;
-        if(error < 0) {
-            y = y + ystep;
-            error = error + deltax;
+        [player setX:x];
+    }
+    for(y=m.y1;y!=m.y2;y+=yinc) {
+        if ([self pointCollidesX:x+(xinc>0?pwidth:0) andY:y+(yinc>0?pheight:0) isBlack:b]) {
+            NSLog(@"%@:y collides at %d/%d", b?@"black":@"white", x,y);
+            break;
         }
-        [player setX:(steep?y:x)];
-        [player setY:(steep?x:y)];
-
+        [player setY:y];
     }
 }
 
