@@ -63,6 +63,10 @@
 	
 }
 
+- (BOOL) checkToggleArea:(SPPoint *) p; {
+	return ((([p y] >= 924) || ([p y] <= 100)) && (([p x] >= 668) || ([p x] <= 100)));
+}
+
 - (void)dealloc {
     NSLog(@"dealloc statusoverlay");
     [super dealloc];

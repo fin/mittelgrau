@@ -36,6 +36,8 @@
 	[posimg setX:0-[posimg width]/2];
     [posimg setY:0-[posimg height]/2];
 	[self addChild:posimg];
+	
+	touchPosition = [SPPoint pointWithX:0 y:0];
     
     return self;
 }
@@ -44,12 +46,14 @@
 }
 
 - (void)dealloc {
+	NSLog(@"dealloc: %f:%f", [touchPosition x], [touchPosition y]);
     [super dealloc];
 }
 
 - (void)setTouchPosition: (SPPoint *)p {
-
-    touchPosition = p;
+    NSLog(@"setting touchpos to: %f:%f", [p x], [p y]);
+	touchPosition = p;
+	NSLog(@"did set touchpos to: %f:%f", [touchPosition x], [touchPosition y]);
     
     SPPoint *p1 = [SPPoint pointWithX:[self x] y:[self y]];
     [self.posimg setX:[p x]-[self x]-[posimg width]/2];
@@ -57,17 +61,21 @@
 }
 
 - (SPPoint *)touchPosition {
+	NSLog(@"get touchpos: %f:%f", [touchPosition x], [touchPosition y]);
     return touchPosition;
 }
 
 - (float) distanceToTouchPosition: (SPPoint *) p {
 	if ((p != nil) && (touchPosition != nil)) {
-		return [SPPoint distanceFromPoint:p toPoint: touchPosition];
+		float dist = [SPPoint distanceFromPoint:p toPoint: touchPosition];
+		return dist;
 	} else {
 		return -1;
 	}
 
 }
+
+
 
 @synthesize player;
 @synthesize posimg;

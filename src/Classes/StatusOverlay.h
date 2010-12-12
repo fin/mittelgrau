@@ -17,6 +17,7 @@
 }
 
 -(void)toggleOrientation;
+-(BOOL)checkToggleArea:(SPPoint *) p;
 
 
 @property(retain) SPImage *gravityBarWhite;
