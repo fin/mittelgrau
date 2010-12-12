@@ -44,20 +44,20 @@
     if (self = [super init]) {
         [self setupSprite];        
 	
-        
-        [self setY:isBlack?970:30];
-        [self setGravity: 100];
-        
-        [self setOrientation:[self isBlack]?-1:1];
-        
         [self setIsBlack:b];
+		
+		[self setY:isBlack?950:30];
+		[self setGravity: 100];
+		
 		[self setFacingRight:[SPTexture textureWithContentsOfFile:(isBlack?@"player_facing_right_b.png":@"player_facing_right_w.png")]];
 		[self setFacingLeft: [SPTexture textureWithContentsOfFile:(isBlack?@"player_facing_left_b.png":@"player_facing_left_w.png")]];
 		[self setFacingFront: [SPTexture textureWithContentsOfFile:(isBlack?@"player_facing_front_b.png":@"player_facing_front_w.png")]];
 		[self setDeltaX:0];
+		[self setOrientation:1];
         if ([self isBlack] == 0) {
             [self toggleOrientation];
         }
+		[self updateOrientation];
         
     }
     return self;
