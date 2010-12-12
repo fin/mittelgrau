@@ -25,12 +25,11 @@
         [self advanceLevel:nil];
         
         SPSound *sound = [SPSound soundWithContentsOfFile:@"background.mp3"];
-        SPSoundChannel *channel = [sound createChannel];
+        channel = [sound createChannel];
         channel.volume = 0.6f;
-         
+        channel.loop = YES;
+        
         [channel play];
-        [channel loop];
-        [channel retain];
 	}
     return self;
 }
@@ -70,6 +69,7 @@
 - (void) dealloc {
     NSLog(@"dealloc: level");
     [levels release];
+    [channel release];
     [super dealloc];
 }
 

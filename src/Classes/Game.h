@@ -17,6 +17,7 @@
     NSMutableArray *levels;
     int levelno;
     Level *current_level;
+    SPSoundChannel *channel;
 }
 
 - (void)advanceLevel:(SPEvent *)event;
