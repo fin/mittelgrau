@@ -61,6 +61,7 @@
 
 - (void)dealloc 
 {
+    NSLog(@"dealloc appdelegate");
     [SPAudioEngine stop];
     [mSparrowView release];
     [mWindow release];    

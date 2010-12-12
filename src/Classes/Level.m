@@ -40,7 +40,7 @@
 /*
     [player_container setWidth:[backgroundImage width]];
     [player_container setHeight:[backgroundImage height]];
-*/    
+*/
     [player_container setX:0];
     [player_container setY:24];
     
@@ -48,6 +48,8 @@
     
 	[whiteplayer setX:100];
 	
+    
+    items = [[NSMutableArray alloc] init];
     
     for(int i=0;i<768;i++) {
         for(int j=0;j<1024;j++) {
@@ -79,6 +81,7 @@
 }
 
 - (void)dealloc {
+    NSLog(@"dealloc level");
     [super dealloc];
 }
 
@@ -123,6 +126,10 @@
             blackCollisionMap[x][y] = true;
         } else if (r>=1 && g>=1 && b >= 1) {
             whiteCollisionMap[x][y] = true;
+        }
+        else if(r<=0 && g>=1 && b <=0) {
+            NSLog(@"found item at %d/%d", x, y);
+            SPSprite *item = [[SPSprite alloc] init];
         }
         x++;
         if(x>=width) {
@@ -302,14 +309,14 @@
     int x;
     for(x=m.x1;x!=m.x2;x+=xinc) {
         if ([self pointCollidesX:x+(xinc>0?pwidth:0) andY:y+(yinc>0?pheight:0)-yinc isBlack:b]) {
-            NSLog(@"%@:x collides at %d/%d", b?@"black":@"white", x,y);
+//            NSLog(@"%@:x collides at %d/%d", b?@"black":@"white", x,y);
             break;
         }
         [player setX:x];
     }
     for(y=m.y1;y!=m.y2;y+=yinc) {
         if ([self pointCollidesX:x+(xinc>0?pwidth:0)-xinc andY:y+(yinc>0?pheight:0) isBlack:b]) {
-            NSLog(@"%@:y collides at %d/%d", b?@"black":@"white", x,y);
+//            NSLog(@"%@:y collides at %d/%d", b?@"black":@"white", x,y);
             break;
         }
         [player setY:y];

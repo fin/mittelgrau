@@ -11,7 +11,6 @@
 #import "Sparrow.h" 
 #import "Player.h"
 #import "PlayerControl.h"
-#import "UIColor-Expanded.h"
 #import "StatusOverlay.h"
 
 @class Level;
@@ -24,6 +23,7 @@
     PlayerControl *control_black;
     PlayerControl *control_white;
 	StatusOverlay *statusOverlay;
+    NSMutableArray *items;
 
 @private
 	BOOL blackCollisionMap[768][1024];

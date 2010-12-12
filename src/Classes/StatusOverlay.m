@@ -64,6 +64,7 @@
 }
 
 - (void)dealloc {
+    NSLog(@"dealloc statusoverlay");
     [super dealloc];
 }
 @synthesize gravityBarWhite;

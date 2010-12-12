@@ -12,6 +12,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		3020929C12B51A76002CADAE /* item.png in Resources */ = {isa = PBXBuildFile; fileRef = 3020929B12B51A76002CADAE /* item.png */; };
+		302092A512B5203E002CADAE /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 302092A412B5203E002CADAE /* Item.m */; };
 		303CFE4D12B27E7A0032ABEC /* player_facing_right_b.png in Resources */ = {isa = PBXBuildFile; fileRef = 303CFE4C12B27E7A0032ABEC /* player_facing_right_b.png */; };
 		30A3B2CB12B2910200D6C103 /* player_facing_right_w.png in Resources */ = {isa = PBXBuildFile; fileRef = 30A3B2CA12B2910200D6C103 /* player_facing_right_w.png */; };
 		30A3B38812B2B10600D6C103 /* controller.png in Resources */ = {isa = PBXBuildFile; fileRef = 30A3B38712B2B10600D6C103 /* controller.png */; };
@@ -66,6 +68,9 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3020929B12B51A76002CADAE /* item.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = item.png; path = Resources/item.png; sourceTree = "<group>"; };
+		302092A312B5203E002CADAE /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		302092A412B5203E002CADAE /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		303CFE4C12B27E7A0032ABEC /* player_facing_right_b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = player_facing_right_b.png; path = Resources/player_facing_right_b.png; sourceTree = "<group>"; };
 		30A3B2CA12B2910200D6C103 /* player_facing_right_w.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = player_facing_right_w.png; path = Resources/player_facing_right_w.png; sourceTree = "<group>"; };
 		30A3B38712B2B10600D6C103 /* controller.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = controller.png; path = Resources/controller.png; sourceTree = "<group>"; };
@@ -133,6 +138,8 @@
 				30A3B39B12B2B42900D6C103 /* PlayerControl.m */,
 				30A3B56712B3B39700D6C103 /* UIColor-Expanded.h */,
 				30A3B56812B3B39700D6C103 /* UIColor-Expanded.m */,
+				302092A312B5203E002CADAE /* Item.h */,
+				302092A412B5203E002CADAE /* Item.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -170,6 +177,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3020929B12B51A76002CADAE /* item.png */,
 				580A7B8712B3BF3000CA181E /* gravity_bar_white.png */,
 				580A7B8512B3BF2300CA181E /* gravity_bar_black.png */,
 				580A7ADD12B3B4D600CA181E /* controller-position.png */,
@@ -296,6 +304,7 @@
 				580A7ADE12B3B4D600CA181E /* controller-position.png in Resources */,
 				580A7B8612B3BF2300CA181E /* gravity_bar_black.png in Resources */,
 				580A7B8812B3BF3000CA181E /* gravity_bar_white.png in Resources */,
+				3020929C12B51A76002CADAE /* item.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +323,7 @@
 				5851191412B290EB00163166 /* StatusOverlay.m in Sources */,
 				30A3B39C12B2B42900D6C103 /* PlayerControl.m in Sources */,
 				30A3B56912B3B39700D6C103 /* UIColor-Expanded.m in Sources */,
+				302092A512B5203E002CADAE /* Item.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

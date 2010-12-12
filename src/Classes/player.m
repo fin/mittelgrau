@@ -21,24 +21,11 @@
 
 @implementation Player
 
-- (id)init {
-    if (self = [super init]) {
-        [self setupSprite];        
-    }
-	
-    [self setDeltaX:10];
-	[self setY:100];
-	[self setGravity: 100];
-    
-	[self setOrientation:[self isBlack]?-1:1];
-	
-    return self;
-}
-
 - (void)setupSprite {
 }
 
 - (void)dealloc {
+    NSLog(@"dealloc player, %@", isBlack?@"black":@"white");
     [super dealloc];
 }
 
@@ -54,13 +41,22 @@
 }
 
 - (Player *)initWithIsBlack:(int)b {
-    self = [self init];
-    [self setIsBlack:b];
-    [self setImg:[SPImage imageWithContentsOfFile:(isBlack?@"player_facing_right_b.png":@"player_facing_right_w.png")]];
-	if ([self isBlack] == 0) {
-		[self toggleOrientation];
-	}
-    [self addChild:[self img]];
+    if (self = [super init]) {
+        [self setupSprite];        
+	
+        [self setDeltaX:10];
+        [self setY:100];
+        [self setGravity: 100];
+        
+        [self setOrientation:[self isBlack]?-1:1];
+        
+        [self setIsBlack:b];
+        [self setImg:[SPImage imageWithContentsOfFile:(isBlack?@"player_facing_right_b.png":@"player_facing_right_w.png")]];
+        if ([self isBlack] == 0) {
+            [self toggleOrientation];
+        }
+        [self addChild:[self img]];
+    }
     return self;
 }
 

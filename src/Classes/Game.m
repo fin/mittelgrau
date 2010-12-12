@@ -16,9 +16,7 @@
     {
 		Level *level = [[Level alloc] initWithBackground:@"level_0.png"];
 		[self addChild:level];
-        
 
-        
 
         
         [self addEventListener:@selector(onTouch:) atObject:level
@@ -26,6 +24,10 @@
         
 	}
     return self;
+}
+
+- (void) dealloc {
+    NSLog(@"dealloc: level");
 }
 
 
