@@ -34,6 +34,7 @@
 		[self setHeight:1024];
 		[self addChild: gravityBarBlack];
 		[self addChild: gravityBarWhite];
+		[self setOrientation:1];
     }
     return self;
 }
@@ -41,10 +42,33 @@
 - (void)setupSprite {
 }
 
+- (void)toggleOrientation {
+	if ([self orientation] == -1) {
+		[self setOrientation: 1];
+		[gravityBarBlack setRotation:SP_D2R(0)];
+		[gravityBarWhite setRotation:SP_D2R(0)];
+		[gravityBarBlack setY:1000];
+		[gravityBarBlack setX:0];
+		[gravityBarWhite setY:0];
+		[gravityBarWhite setX:0];
+	} else {
+		[self setOrientation: -1];
+		[gravityBarBlack setRotation:SP_D2R(180)];
+		[gravityBarWhite setRotation:SP_D2R(180)];
+		[gravityBarBlack setY: 24];
+		[gravityBarBlack setX: [gravityBarBlack width]];
+		[gravityBarWhite setY: 1024];
+		[gravityBarWhite setX: [gravityBarWhite width]];
+	}
+	
+}
+
 - (void)dealloc {
     [super dealloc];
 }
 @synthesize gravityBarWhite;
 @synthesize gravityBarBlack;
+@synthesize orientation;
+
 @end
 

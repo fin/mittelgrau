@@ -20,7 +20,8 @@
 	SPImage *posimg;
 }
 
-- (id) initWithPlayer:(Player*) p;
+- (id) initWithPlayer:(Player *) p;
+- (float) distanceToTouchPosition:(SPPoint *) p;
 
 @property(retain) SPPoint *touchPosition;
 @property(retain) Player *player;

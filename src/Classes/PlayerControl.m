@@ -47,7 +47,7 @@
     [super dealloc];
 }
 
-- (void)setTouchPosition:(SPPoint *)p {
+- (void)setTouchPosition: (SPPoint *)p {
 
     touchPosition = p;
     
@@ -58,6 +58,15 @@
 
 - (SPPoint *)touchPosition {
     return touchPosition;
+}
+
+- (float) distanceToTouchPosition: (SPPoint *) p {
+	if ((p != nil) && (touchPosition != nil)) {
+		return [SPPoint distanceFromPoint:p toPoint: touchPosition];
+	} else {
+		return -1;
+	}
+
 }
 
 @synthesize player;

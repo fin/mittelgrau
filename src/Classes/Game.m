@@ -23,8 +23,6 @@
         
         [self addEventListener:@selector(onTouch:) atObject:level
 	               forType:SP_EVENT_TYPE_TOUCH];
-		[self setStatusOverlay:[[StatusOverlay alloc] init]];
-		[self addChild: statusOverlay];
         
 	}
     return self;
@@ -34,5 +32,4 @@
 
 
 
-@synthesize statusOverlay;
 @end

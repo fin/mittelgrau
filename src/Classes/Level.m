@@ -49,6 +49,9 @@
     
     [self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
 
+	[self setStatusOverlay:[[StatusOverlay alloc] init]];
+	[self addChild: statusOverlay];
+	
 	return self;
 }
 
@@ -130,30 +133,45 @@
 									 andPhase:SPTouchPhaseEnded] allObjects];
     
     for(SPTouch *t in touches_ended) {
-		[self removePlayerControl: t];
-    }
+		SPPoint *cur = [t locationInSpace:self];
+		if ([self getControlForEvent:t] != nil)  {
+			if ([[self getControlForEvent:t] distanceToTouchPosition: cur] < 50) {
+				[self removePlayerControl: t];
+			}
+		}
+	}
     for(SPTouch *t in touches_started) {
         PlayerControl *pc = [self getControlForEvent:t];
 		SPPoint *cur = [t locationInSpace:self];
-        if(pc==nil) {
-			if ([self eventIsBlack:t]) {
-				pc = [[PlayerControl alloc] initWithPlayer:[self blackplayer]];
-				[pc setIsBlack:YES];
-				[pc setTouchPosition:cur];
-				[self setControl:pc];
-			} else {
-				pc = [[PlayerControl alloc] initWithPlayer:[self whiteplayer]];
-				[pc setIsBlack:NO];
-				[pc setTouchPosition:cur];
-				[self setControl:pc];
+		
+		if ((([cur y] >= 924) || ([cur y] <= 100))
+			&& (([cur x] >= 668) || ([cur x] <= 100)))
+		{
+			[whiteplayer toggleOrientation];
+			[blackplayer toggleOrientation];
+			[statusOverlay toggleOrientation];
+		} else {
+			if(pc==nil) {
+				if ([self eventIsBlack:t]) {
+					pc = [[PlayerControl alloc] initWithPlayer:[self blackplayer]];
+					[pc setIsBlack:YES];
+					[pc setTouchPosition:cur];
+					[self setControl:pc];
+				} else {
+					pc = [[PlayerControl alloc] initWithPlayer:[self whiteplayer]];
+					[pc setIsBlack:NO];
+					[pc setTouchPosition:cur];
+					[self setControl:pc];
+				}
+				
+				SPPoint *loc = [t locationInSpace:self]; 
+				[pc setX:[loc x]];
+				[pc setY:[loc y]];
+				[pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
 			}
-			
-            SPPoint *loc = [t locationInSpace:self]; 
-            [pc setX:[loc x]];
-            [pc setY:[loc y]];
-            [pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
-            
 		}
+
+		
     }
     for(SPTouch *t in touches_moved) {
         SPPoint *prev = [t previousLocationInSpace:self];
@@ -345,6 +363,7 @@
 @synthesize control_black;
 @synthesize control_white;
 @synthesize backgroundImage;
+@synthesize statusOverlay;
 
 @end
 

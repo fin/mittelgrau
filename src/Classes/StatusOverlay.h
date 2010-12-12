@@ -10,12 +10,16 @@
 #import <Sparrow.h>
 
 @interface StatusOverlay : SPSprite {
-	
+	float orientation;
 @private
 	SPImage *gravityBarWhite;
 	SPImage *gravityBarBlack;
 }
 
+-(void)toggleOrientation;
+
+
 @property(retain) SPImage *gravityBarWhite;
 @property(retain) SPImage *gravityBarBlack;
+@property float orientation;
 @end

@@ -15,9 +15,7 @@
 
 @interface Game : SPStage {
 
-	StatusOverlay *statusOverlay;
 }
 
 
-@property(retain) StatusOverlay *statusOverlay;
 @end

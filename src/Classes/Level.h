@@ -12,6 +12,7 @@
 #import "Player.h"
 #import "PlayerControl.h"
 #import "UIColor-Expanded.h"
+#import "StatusOverlay.h"
 
 @class Level;
 
@@ -22,7 +23,8 @@
     
     PlayerControl *control_black;
     PlayerControl *control_white;
-	
+	StatusOverlay *statusOverlay;
+
 @private
 	BOOL blackCollisionMap[768][1024];
 	BOOL whiteCollisionMap[768][1024];
@@ -46,5 +48,6 @@
 @property(retain) PlayerControl *control_black;
 @property(retain) PlayerControl *control_white;
 @property(retain) SPImage *backgroundImage;
+@property(retain) StatusOverlay *statusOverlay;
 
 @end
