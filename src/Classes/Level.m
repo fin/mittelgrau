@@ -155,15 +155,13 @@
     for(SPTouch *t in touches_ended) {
 		i++;
 		SPPoint *cur = [t locationInSpace:self];
-		NSLog(@"%d. touch ended at: %f:%f", i, [cur x], [cur y]);
 		if ([self getControlForEvent:t] != nil)  {
-			if ([[self getControlForEvent:t] distanceToTouchPosition: cur] < 50) {
+			if ([[self getControlForEvent:t] distanceToTouchPosition: cur] < 100) {
 				[self removePlayerControl: t];
 			} else {
 				PlayerControl* ctl = [self getControlForEvent:t];
 				float x =  [[ctl touchPosition] x];
 				float y = [[ctl touchPosition] y];
-				NSLog([ctl isBlack]?@"cotrol is black":@"control is white");
 				NSLog(@"did not remove because distance too large: event: %f:%f control %f:%f", [cur x], [cur y], x , y);
 			}
 
@@ -172,7 +170,6 @@
     for(SPTouch *t in touches_started) {
         PlayerControl *pc = [self getControlForEvent:t];
 		SPPoint *cur = [t locationInSpace:self];
-		NSLog(@"touch started at: %f:%f", [cur x], [cur y]);
 		if ([statusOverlay checkToggleArea: cur])
 		{
 			[whiteplayer toggleOrientation];
@@ -209,7 +206,6 @@
 		i++;
         SPPoint *prev = [t previousLocationInSpace:self];
 		SPPoint *cur = [t locationInSpace:self];
-		NSLog(@"%d. touch moved at: %f:%f", i, [cur x], [cur y]);
         if(prev==nil) {
 			if ([self getControlForEvent:t] != nil) {
 				[[self getControlForEvent:t] setTouchPosition:cur];
@@ -294,7 +290,7 @@
 		} else {
 			[self setControl_white:nil];
 		}
-		[pc dealloc]; //it's a bloody prototype
+		[pc release];
 	}
 	
 }
