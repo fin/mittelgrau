@@ -30,12 +30,25 @@
 	
 	[self setWhiteplayer:[[Player alloc] initWithIsBlack: 0]];
 	[self setBlackplayer:[[Player alloc] initWithIsBlack: 1]];
+    
+    SPSprite *player_container = [[SPSprite alloc] init];
+    
+    [player_container retain];
 	
-	[self addChild:blackplayer];
-	[self addChild:whiteplayer];
-
+	[player_container addChild:blackplayer];
+	[player_container addChild:whiteplayer];
+/*
+    [player_container setWidth:[backgroundImage width]];
+    [player_container setHeight:[backgroundImage height]];
+*/    
+    [player_container setX:0];
+    [player_container setY:24];
+    
+    [self addChild:player_container];
+    
 	[whiteplayer setX:100];
 	
+    
     for(int i=0;i<768;i++) {
         for(int j=0;j<1024;j++) {
             blackCollisionMap[i][j]=false;
@@ -251,11 +264,11 @@
 
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event {
     Player_movement m = [player movementForFrame:event];
-    if(m.x2 + [player width] > [self width]) {
-        m.x2 = [self width] - [player width];
+    if(m.x2 + [player width] > [backgroundImage width]) {
+        m.x2 = [backgroundImage width] - [player width];
     }
-    if(m.y2 + [player height] > [self height]) {
-        m.y2 = [self height] - [player height];
+    if(m.y2 + [player height] > [backgroundImage height]) {
+        m.y2 = [backgroundImage height] - [player height];
     }
     if(m.x2<0) {
         m.x2 = 0;
