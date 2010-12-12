@@ -14,8 +14,10 @@
 #import "StatusOverlay.h"
 
 @interface Game : SPStage {
-
+    NSMutableArray *levels;
+    int levelno;
 }
 
+- (void)advanceLevel:(SPEvent *)event;
 
 @end
