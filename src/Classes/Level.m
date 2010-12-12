@@ -318,13 +318,15 @@
     int yinc = abs(m.y2-m.y1)==0?0:(m.y2-m.y1)/abs(m.y2-m.y1);
     int x;
     for(x=m.x1;x!=m.x2;x+=xinc) {
-        if ([self pointCollidesX:x+(xinc>0?pwidth:0) andY:y+(yinc>0?pheight:0) isBlack:b]) {
+        if ([self pointCollidesX:x+(xinc>0?pwidth:0) andY:y+(yinc>0?pheight:0)-yinc isBlack:b]) {
+            NSLog(@"%@:x collides at %d/%d", b?@"black":@"white", x,y);
             break;
         }
         [player setX:x];
     }
     for(y=m.y1;y!=m.y2;y+=yinc) {
-        if ([self pointCollidesX:x+(xinc>0?pwidth:0) andY:y+(yinc>0?pheight:0) isBlack:b]) {
+        if ([self pointCollidesX:x+(xinc>0?pwidth:0)-xinc andY:y+(yinc>0?pheight:0) isBlack:b]) {
+            NSLog(@"%@:y collides at %d/%d", b?@"black":@"white", x,y);
             break;
         }
         [player setY:y];
