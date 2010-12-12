@@ -29,7 +29,10 @@
 
 - (void)advanceLevel:(SPEvent *)event {
     if(levelno>0) {
-        [self removeChild:[levels objectAtIndex:levelno-1]];
+        Level *level = [levels objectAtIndex:levelno-1];
+        [self removeChild:level];
+        [self removeEventListener:@selector(onTouch:) atObject:level
+                   forType:SP_EVENT_TYPE_TOUCH];
     }
     if(levelno>=[levels count]) {
         NSLog(@"it's over!");
