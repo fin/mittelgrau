@@ -38,6 +38,7 @@
 - (BOOL)eventIsBlack:(SPTouch *)e;
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event;
 - (void)onEnterFrame:(SPEnterFrameEvent *)event;
+- (BOOL)pointCollidesX:(int)x andY:(int)y isBlack:(BOOL)b;
 
 
 @property(retain) Player *blackplayer;

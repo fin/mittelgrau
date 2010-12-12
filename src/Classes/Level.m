@@ -189,22 +189,13 @@
 
 - (BOOL)eventIsBlack:(SPTouch *)e {
 	if ([[e locationInSpace:self] y] >= [backgroundImage height]/2) {
-/*		NSLog(@"event is black");
-		NSLog(@"height: %f", [backgroundImage height]);
-		NSLog(@"y is %f", [[e locationInSpace:self] y]);
-*/
 		return YES;
 	} else {
-/*		NSLog(@"event is white");
-		NSLog(@"height: %f", [backgroundImage height]);
-		NSLog(@"y is %f", [[e locationInSpace:self] y]);
- */
 		return NO;
 	}
 }
 
 - (PlayerControl *)getControlForEvent:(SPTouch *)e {
-//    NSLog(@"get control");
 	if ([self eventIsBlack:e]) {
         return control_black;
     }
@@ -305,20 +296,33 @@
     for(int x=m.x1; x!=m.x2; x+=inc) {
         if(collision)
             break;
-        for(int xcorner=0;xcorner<=1;xcorner++) {
-            for(int ycorner=0;ycorner<=1;ycorner++) {
-                if((b?blackCollisionMap:whiteCollisionMap)[xcorner*(int)[player width]+(steep?y:x)][ycorner*(int)[player height]+(steep?x:y)]) {
-                    collision=TRUE;
-                    if(xcorner>0) {
-                        [player setDeltaX:0];
-                    }
-                    if(ycorner>0) {
-                        [player setDeltaY:0];
-                    }
-                    break;
-                }
+        
+                    // (steep?y:x)][(steep?x:y)
+                    // xcorner*(int)[player width]+
+                    // ycorner*(int)[player height]+
+        
+        BOOL cl, cr, ct, cb;
+        cl = [self pointCollidesX:(steep?y:x) andY:(steep?x:y)+[player height]/2 isBlack:b];
+        cr = [self pointCollidesX:(steep?y:x)+[player width] andY:(steep?x:y)+[player height]/2 isBlack:b];
+        ct = [self pointCollidesX:(steep?y:x)+[player width]/2 andY:(steep?x:y) isBlack:b];
+        cb = [self pointCollidesX:(steep?y:x)+[player width]/2 andY:(steep?x:y)+[player height] isBlack:b];
+        if(cl || cr || ct || cb) {
+            collision = true;
+            if(cr && !steep && deltax>0) {
+                [player setDeltaX:0];
             }
+            if(cl && !steep && deltax<0) {
+                [player setDeltaX:0];
+            }
+            if(ct && steep && deltax>0) {
+                [player setDeltaY:0];
+            }
+            if(cb && steep && deltax<0) {
+                [player setDeltaY:0];
+            }
+            continue;
         }
+        
         // REM increment here a variable to control the progress of the line drawing
         error = error - deltay;
         if(error < 0) {
@@ -329,6 +333,11 @@
         [player setY:(steep?x:y)];
 
     }
+}
+
+- (BOOL)pointCollidesX:(int)x andY:(int)y isBlack:(BOOL)b {
+    return (b?blackCollisionMap:whiteCollisionMap)[x][y];
+    
 }
 
 @synthesize blackplayer;
