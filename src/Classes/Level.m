@@ -144,21 +144,29 @@
 	
     NSArray *touches_ended = [[event touchesWithTarget:self
 									 andPhase:SPTouchPhaseEnded] allObjects];
-    
+    int i = 0;
     for(SPTouch *t in touches_ended) {
+		i++;
 		SPPoint *cur = [t locationInSpace:self];
+		NSLog(@"%d. touch ended at: %f:%f", i, [cur x], [cur y]);
 		if ([self getControlForEvent:t] != nil)  {
 			if ([[self getControlForEvent:t] distanceToTouchPosition: cur] < 50) {
 				[self removePlayerControl: t];
+			} else {
+				PlayerControl* ctl = [self getControlForEvent:t];
+				float x =  [[ctl touchPosition] x];
+				float y = [[ctl touchPosition] y];
+				NSLog([ctl isBlack]?@"cotrol is black":@"control is white");
+				NSLog(@"did not remove because distance too large: event: %f:%f control %f:%f", [cur x], [cur y], x , y);
 			}
+
 		}
 	}
     for(SPTouch *t in touches_started) {
         PlayerControl *pc = [self getControlForEvent:t];
 		SPPoint *cur = [t locationInSpace:self];
-		
-		if ((([cur y] >= 924) || ([cur y] <= 100))
-			&& (([cur x] >= 668) || ([cur x] <= 100)))
+		NSLog(@"touch started at: %f:%f", [cur x], [cur y]);
+		if ([statusOverlay checkToggleArea: cur])
 		{
 			[whiteplayer toggleOrientation];
 			[blackplayer toggleOrientation];
@@ -181,15 +189,24 @@
 				[pc setX:[loc x]];
 				[pc setY:[loc y]];
 				[pc setTouchPosition:[SPPoint pointWithX:[loc x] y:[loc y]]];
+			} else {
+				[pc setTouchPosition:cur];
 			}
+
 		}
 
 		
     }
+	i = 0;
     for(SPTouch *t in touches_moved) {
+		i++;
         SPPoint *prev = [t previousLocationInSpace:self];
 		SPPoint *cur = [t locationInSpace:self];
+		NSLog(@"%d. touch moved at: %f:%f", i, [cur x], [cur y]);
         if(prev==nil) {
+			if ([self getControlForEvent:t] != nil) {
+				[[self getControlForEvent:t] setTouchPosition:cur];
+			}
             return;
         }
 	
@@ -201,7 +218,7 @@
 					[[self control_white] setTouchPosition:cur];
 				}
 			} else {
-				[[self control_white] setTouchPosition:cur];
+				//[[self control_white] setTouchPosition:cur];
 			}
         }
         if([self control_black] != nil && [self eventIsBlack:t]){
@@ -212,7 +229,7 @@
 					[[self control_black] setTouchPosition:cur];
 			}
 			} else {
-				[[self control_black] setTouchPosition:cur];
+				//[[self control_black] setTouchPosition:cur];
 			}
         }
     }
@@ -270,7 +287,7 @@
 		} else {
 			[self setControl_white:nil];
 		}
-		//[pc dealloc]; //it's a bloody prototype
+		[pc dealloc]; //it's a bloody prototype
 	}
 	
 }
@@ -302,14 +319,12 @@
     int x;
     for(x=m.x1;x!=m.x2;x+=xinc) {
         if ([self pointCollidesX:x+(xinc>0?pwidth:0) andY:y+(yinc>0?pheight:0) isBlack:b]) {
-            NSLog(@"%@:x collides at %d/%d", b?@"black":@"white", x,y);
             break;
         }
         [player setX:x];
     }
     for(y=m.y1;y!=m.y2;y+=yinc) {
         if ([self pointCollidesX:x+(xinc>0?pwidth:0) andY:y+(yinc>0?pheight:0) isBlack:b]) {
-            NSLog(@"%@:y collides at %d/%d", b?@"black":@"white", x,y);
             break;
         }
         [player setY:y];
