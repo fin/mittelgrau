@@ -24,6 +24,7 @@
 - (float) distanceToTouchPosition:(SPPoint *) p;
 
 @property(retain) SPPoint *touchPosition;
+@property(retain) SPPoint *testPos;
 @property(retain) Player *player;
 @property(retain) SPImage *posimg;
 @property BOOL isBlack;

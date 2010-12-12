@@ -135,7 +135,9 @@
         }
         else if(r<=0 && g>=1 && b <=0) {
             NSLog(@"found item at %d/%d", x, y);
-            [[self backdrop] addChild:[[Item alloc] initWithX:x andY:y]];
+            Item *i = [[Item alloc] initWithX:x andY:y];
+            [[self backdrop] addChild:i];
+            [items addObject:i];
         }
         x++;
         if(x>=width) {
@@ -161,15 +163,13 @@
     for(SPTouch *t in touches_ended) {
 		i++;
 		SPPoint *cur = [t locationInSpace:self];
-		NSLog(@"%d. touch ended at: %f:%f", i, [cur x], [cur y]);
 		if ([self getControlForEvent:t] != nil)  {
-			if ([[self getControlForEvent:t] distanceToTouchPosition: cur] < 50) {
+			if ([[self getControlForEvent:t] distanceToTouchPosition: cur] < 100) {
 				[self removePlayerControl: t];
 			} else {
 				PlayerControl* ctl = [self getControlForEvent:t];
 				float x =  [[ctl touchPosition] x];
 				float y = [[ctl touchPosition] y];
-				NSLog([ctl isBlack]?@"cotrol is black":@"control is white");
 				NSLog(@"did not remove because distance too large: event: %f:%f control %f:%f", [cur x], [cur y], x , y);
 			}
 
@@ -178,7 +178,6 @@
     for(SPTouch *t in touches_started) {
         PlayerControl *pc = [self getControlForEvent:t];
 		SPPoint *cur = [t locationInSpace:self];
-		NSLog(@"touch started at: %f:%f", [cur x], [cur y]);
 		if ([statusOverlay checkToggleArea: cur])
 		{
 			[whiteplayer toggleOrientation];
@@ -215,7 +214,6 @@
 		i++;
         SPPoint *prev = [t previousLocationInSpace:self];
 		SPPoint *cur = [t locationInSpace:self];
-		NSLog(@"%d. touch moved at: %f:%f", i, [cur x], [cur y]);
         if(prev==nil) {
 			if ([self getControlForEvent:t] != nil) {
 				[[self getControlForEvent:t] setTouchPosition:cur];
@@ -301,7 +299,6 @@
 			[self setControl_white:nil];
 		}
 		[pc release]; //it's a bloody prototype
-        pc = nil;
 	}
 	
 }
@@ -309,6 +306,27 @@
 - (void)onEnterFrame:(SPEnterFrameEvent *)event {
     [self playerCollides:blackplayer isBlack:TRUE inFrame:event];
     [self playerCollides:whiteplayer isBlack:FALSE inFrame:event];
+    NSMutableArray *toRemove = [[NSMutableArray alloc] init];
+    for(Item *i in items) {
+        SPPoint *p = [SPPoint pointWithX:[i x] y:[i y]];
+        if([[[self blackplayer] bounds] containsPoint:p]) {
+            NSLog(@"blackplayer collected item");
+            [backdrop removeChild:i];
+            [toRemove addObject:i];
+            continue; // prevent whiteplayer from getting it. unlikely, but possible.
+        }
+        if([[[self whiteplayer] bounds] containsPoint:p]) {
+            NSLog(@"whiteplayer collected item");
+            [backdrop removeChild:i];
+            [items addObject:i];
+        }
+    }
+    for(Item *i in toRemove) {
+        [items removeObject:i];
+    }
+    if([items count] == 0) {
+        NSLog(@"woohooo!");
+    }
 }
 
 - (void)playerCollides:(Player *)player isBlack:(BOOL)b inFrame:(SPEnterFrameEvent*)event {
