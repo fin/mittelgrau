@@ -19,7 +19,8 @@
         [levels retain];
         
         [levels addObject:[[Level alloc] initWithBackground:@"level_0.png"]];
-        
+        [levels addObject:[[Level alloc] initWithBackground:@"level_1.png"]];
+		
         [self advanceLevel:nil];
         
 	}
