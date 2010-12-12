@@ -16,8 +16,10 @@
 @interface Game : SPStage {
     NSMutableArray *levels;
     int levelno;
+    Level *current_level;
 }
 
 - (void)advanceLevel:(SPEvent *)event;
+- (void)clickOnLastLevel:(SPEvent *)event;
 
 @end
