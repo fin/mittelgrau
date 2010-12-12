@@ -45,10 +45,7 @@
     
 	[player_container addChild:blackplayer];
 	[player_container addChild:whiteplayer];
-/*
-    [player_container setWidth:[backgroundImage width]];
-    [player_container setHeight:[backgroundImage height]];
-*/
+
     [player_container setX:0];
     [player_container setY:24];
     
@@ -180,6 +177,7 @@
 		SPPoint *cur = [self locationInSpace:t]; //  [t locationInSpace:self];
 		if ([statusOverlay checkToggleArea: cur])
 		{
+            [[SPSound soundWithContentsOfFile:@"grav_change_a.aif"] play];
 			[whiteplayer toggleOrientation];
 			[blackplayer toggleOrientation];
 			[statusOverlay toggleOrientation];
