@@ -63,7 +63,7 @@
         }
     }
 	
-	UIImage *imgdata = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"level_0" ofType:@"png"]];
+	UIImage *imgdata = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:[backgroundPath substringToIndex:[backgroundPath length]-4]  ofType:@"png"]];
 	[self getCollisionMapsFromImage:imgdata];
     
     [self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
