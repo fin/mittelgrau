@@ -40,8 +40,6 @@
     
     SPSprite *player_container = [[SPSprite alloc] init];
     
-    [player_container retain];
-	
 	[player_container addChild:blackplayer];
 	[player_container addChild:whiteplayer];
 /*
@@ -87,6 +85,7 @@
 }
 
 - (void)dealloc {
+    [backdrop release];
     NSLog(@"dealloc level");
     [super dealloc];
 }
@@ -340,6 +339,7 @@
     }
     if([items count] == 0) {
         NSLog(@"woohooo!");
+        [self dispatchEvent:[SPEvent eventWithType:@"LEVEL_DONE"]];
     }
 }
 

@@ -14,20 +14,37 @@
 {
     if (self = [super initWithWidth:width height:height])
     {
-		Level *level = [[Level alloc] initWithBackground:@"level_0.png"];
-		[self addChild:level];
-
-
+        levelno = 0;
+        levels = [[NSMutableArray alloc] init];
+        [levels retain];
         
-        [self addEventListener:@selector(onTouch:) atObject:level
-	               forType:SP_EVENT_TYPE_TOUCH];
+        [levels addObject:[[Level alloc] initWithBackground:@"level_0.png"]];
+        
+        [self advanceLevel:nil];
         
 	}
     return self;
 }
 
+- (void)advanceLevel:(SPEvent *)event {
+    if(levelno>0) {
+        [self removeChild:[levels objectAtIndex:levelno-1]];
+    }
+    if(levelno>=[levels count]) {
+        NSLog(@"it's over!");
+        return;
+    }
+    Level *level = [levels objectAtIndex:levelno];
+    [self addChild:level];
+    [self addEventListener:@selector(onTouch:) atObject:level
+               forType:SP_EVENT_TYPE_TOUCH];
+    [level addEventListener:@selector(advanceLevel:) atObject:self forType:@"LEVEL_DONE"];
+    levelno++;
+}
+
 - (void) dealloc {
     NSLog(@"dealloc: level");
+    [levels release];
     [super dealloc];
 }
 
