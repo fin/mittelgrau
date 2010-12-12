@@ -134,14 +134,17 @@
     }
     for(SPTouch *t in touches_started) {
         PlayerControl *pc = [self getControlForEvent:t];
+		SPPoint *cur = [t locationInSpace:self];
         if(pc==nil) {
 			if ([self eventIsBlack:t]) {
 				pc = [[PlayerControl alloc] initWithPlayer:[self blackplayer]];
 				[pc setIsBlack:YES];
+				[pc setTouchPosition:cur];
 				[self setControl:pc];
 			} else {
 				pc = [[PlayerControl alloc] initWithPlayer:[self whiteplayer]];
 				[pc setIsBlack:NO];
+				[pc setTouchPosition:cur];
 				[self setControl:pc];
 			}
 			
@@ -160,20 +163,25 @@
         }
 	
         if([self control_white] != nil && ![self eventIsBlack:t]) {
-            if(([[self control_white] touchPosition]!=nil) &&
-			   [SPPoint distanceFromPoint:cur toPoint:prev] <= 50) {
-				[[self control_white] setTouchPosition:prev];
+            if([[self control_white] touchPosition]!=nil){
+				if (([SPPoint distanceFromPoint:cur toPoint:[[self control_white] touchPosition]] <= 100)
+					|| ([SPPoint distanceFromPoint: cur toPoint: prev] < 200))
+				{
+					[[self control_white] setTouchPosition:cur];
+				}
 			} else {
-				[self removePlayerControl: t];
+				[[self control_white] setTouchPosition:cur];
 			}
-
         }
         if([self control_black] != nil && [self eventIsBlack:t]){
-            if(([[self control_black] touchPosition]!=nil) &&
-			   [SPPoint distanceFromPoint:cur toPoint:prev] <= 50) {
-				[[self control_black] setTouchPosition:prev];
+            if(([[self control_black] touchPosition]!=nil)
+				|| ([SPPoint distanceFromPoint: cur toPoint: prev] < 200))
+			{
+				if ([SPPoint distanceFromPoint:cur toPoint:[[self control_black] touchPosition]] <= 100) {
+					[[self control_black] setTouchPosition:cur];
+			}
 			} else {
-				[self removePlayerControl: t];
+				[[self control_black] setTouchPosition:cur];
 			}
         }
     }
