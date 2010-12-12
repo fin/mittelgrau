@@ -20,6 +20,7 @@
         
         [levels addObject:@"level_0.png"];
         [levels addObject:@"level_1.png"];
+		[levels addObject:@"level_2.png"];
 		[levels addObject:@"winning_screen.png"];
 		
         [self advanceLevel:nil];
