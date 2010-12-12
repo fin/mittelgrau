@@ -46,7 +46,7 @@
 }
 
 - (void)dealloc {
-	NSLog(@"dealloc playercontrol: %f:%f", [touchPosition x], [touchPosition y]);
+//	NSLog(@"dealloc playercontrol: %f:%f", [touchPosition x], [touchPosition y]);
     [super dealloc];
 }
 
@@ -54,7 +54,7 @@
 //    NSLog(@"setting touchpos to: %f:%f", [p x], [p y]);
 	touchPosition = p;
 	[touchPosition retain];
-	NSLog(@"did set touchpos to: %f:%f", [touchPosition x], [touchPosition y]);
+//	NSLog(@"did set touchpos to: %f:%f", [touchPosition x], [touchPosition y]);
 	[self setTestPos:p];
     
     SPPoint *p1 = [SPPoint pointWithX:[self x] y:[self y]];
@@ -64,7 +64,7 @@
 
 - (SPPoint *)touchPosition {
 	if ([touchPosition x] != [[self testPos] x]) {
-		NSLog(@"touchpos differs from testpos: %f:%f", [touchPosition x], [touchPosition y]);
+//		NSLog(@"touchpos differs from testpos: %f:%f", [touchPosition x], [touchPosition y]);
 	}
     return touchPosition;
 }

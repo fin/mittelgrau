@@ -20,9 +20,17 @@
         
         [levels addObject:@"level_0.png"];
         [levels addObject:@"level_1.png"];
-		[levels addObject:@"winnig_screen.png"];
+		[levels addObject:@"winning_screen.png"];
 		
         [self advanceLevel:nil];
+        
+        SPSound *sound = [SPSound soundWithContentsOfFile:@"background.mp3"];
+        SPSoundChannel *channel = [sound createChannel];
+        channel.volume = 0.6f;
+         
+        [channel play];
+        [channel loop];
+        [channel retain];
 	}
     return self;
 }
