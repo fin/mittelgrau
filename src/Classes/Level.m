@@ -8,7 +8,7 @@
 
 #import "Level.h"
 #import "Player.h"
-
+#import "Item.h"
 
 // --- private interface ---------------------------------------------------------------------------
 
@@ -23,10 +23,17 @@
 @implementation Level
 -(Level*) initWithBackground: (NSString*) backgroundPath {
 	self = [self init];	
+    
+    [self setBackdrop:[[SPSprite alloc] init]];
+    [[self backdrop] setX:0];
+    [[self backdrop] setY:24];
+	[self addChild:backdrop];
+    
 	//set background and add to display tree
-	[self setBackgroundImage:[SPImage imageWithContentsOfFile:backgroundPath]];
-	[backgroundImage setY:24];
-	[self addChild:backgroundImage];
+    backgroundImage = [SPImage imageWithContentsOfFile:backgroundPath];
+	[backgroundImage setY:0];
+    [backgroundImage retain];
+	[[self backdrop] addChild:backgroundImage];
 	
 	[self setWhiteplayer:[[Player alloc] initWithIsBlack: 0]];
 	[self setBlackplayer:[[Player alloc] initWithIsBlack: 1]];
@@ -58,9 +65,8 @@
         }
     }
 	
-	UIImage *backdrop = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"level_0" ofType:@"png"]];
-	[self getCollisionMapsFromImage:backdrop];
-    
+	UIImage *imgdata = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"level_0" ofType:@"png"]];
+	[self getCollisionMapsFromImage:imgdata];
     
     [self addEventListener:@selector(onEnterFrame:) atObject:self forType:SP_EVENT_TYPE_ENTER_FRAME];
 
@@ -129,7 +135,7 @@
         }
         else if(r<=0 && g>=1 && b <=0) {
             NSLog(@"found item at %d/%d", x, y);
-            SPSprite *item = [[SPSprite alloc] init];
+            [[self backdrop] addChild:[[Item alloc] initWithX:x andY:y]];
         }
         x++;
         if(x>=width) {
@@ -294,7 +300,8 @@
 		} else {
 			[self setControl_white:nil];
 		}
-		[pc dealloc]; //it's a bloody prototype
+		[pc release]; //it's a bloody prototype
+        pc = nil;
 	}
 	
 }
@@ -349,7 +356,7 @@
 @synthesize whiteplayer;
 @synthesize control_black;
 @synthesize control_white;
-@synthesize backgroundImage;
+@synthesize backdrop;
 @synthesize statusOverlay;
 
 @end
