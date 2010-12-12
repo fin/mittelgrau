@@ -167,7 +167,6 @@
 				PlayerControl* ctl = [self getControlForEvent:t];
 				float x =  [[ctl touchPosition] x];
 				float y = [[ctl touchPosition] y];
-				NSLog(@"did not remove because distance too large: event: %f:%f control %f:%f", [cur x], [cur y], x , y);
 			}
 
 		}
@@ -337,7 +336,6 @@
         [items removeObject:i];
     }
     if([items count] == 0) {
-        NSLog(@"woohooo!");
         [self dispatchEvent:[SPEvent eventWithType:@"LEVEL_DONE"]];
     }
 }
